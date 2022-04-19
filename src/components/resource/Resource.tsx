@@ -67,7 +67,7 @@ export const cachedResource = (empty: boolean, offline = false) => {
       size = 'w-full h-20 m-2 bg-gray-200 bg-opacity-10';
     }
 
-    let el = (
+    const el = (
       <div
         class={[
           'load-local-file rounded-md',
@@ -83,7 +83,8 @@ export const cachedResource = (empty: boolean, offline = false) => {
       </div>
     );
 
-    if (empty && offline) el = <div class="h-full w-full flex items-center justify-center"> </div>;
+    // console.log(empty, offline);
+    // if (empty && offline) el = <div class="h-full w-full flex items-center justify-center"> </div>;
 
     return el;
   };

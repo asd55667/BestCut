@@ -1,3 +1,29 @@
+<script lang="ts" setup>
+import { Collapse, CollapsePanel } from 'ant-design-vue';
+import { CaretRightOutlined, CaretDownOutlined } from '@ant-design/icons-vue';
+import { useResource } from './useResource';
+
+const { t } = useI18n();
+const { libs, libIndex, tabIndex, fragmentIdx, setLibIndex, setFragmentIdx, updateFragments } =
+  useResource();
+
+const activeLib = ref(libIndex.value.toString());
+watch(activeLib, (val: string) => {
+  val && setLibIndex(+val);
+});
+watch([libIndex, tabIndex], ([val, _]: [number, number]) => {
+  activeLib.value = val.toString();
+  updateFragments();
+});
+
+const icon = (prop: { [prop: string]: any }) => {
+  const bool = prop.panelKey === activeLib.value;
+  return bool ? h(CaretDownOutlined) : h(CaretRightOutlined);
+};
+
+updateFragments();
+</script>
+
 <template>
   <Collapse
     class="overflow-y-scroll h-full"
@@ -9,7 +35,7 @@
     <CollapsePanel
       v-for="(resource, i) of libs"
       :key="i"
-      :class="[selectedLib === i ? 'color-[aqua]' : 'text-white', 'my-2']"
+      :class="[libIndex === i ? 'text-[aqua]' : 'text-white', 'my-2']"
       :header="t(`resource.${resource.libName}`)"
       :showArrow="Boolean(resource.fragments.length > 1)"
     >
@@ -17,8 +43,8 @@
         <div
           v-for="(fragment, j) in resource.fragments"
           :key="fragment.name"
-          :class="[selectedFragment === j ? 'color-[aqua]' : '', 'my-2']"
-          @click="switchItem(j)"
+          :class="[fragmentIdx === j ? 'text-[aqua]' : '', 'my-2']"
+          @click="setFragmentIdx(j)"
         >
           {{ fragment.name }}
         </div>
@@ -26,60 +52,6 @@
     </CollapsePanel>
   </Collapse>
 </template>
-
-<script lang="ts" setup>
-import type { ResourceLib } from '@/logic/resource/tab';
-
-import { Collapse, CollapsePanel } from 'ant-design-vue';
-import { CaretRightOutlined, CaretDownOutlined } from '@ant-design/icons-vue';
-
-type Props = {
-  libs: ResourceLib[];
-  selectedLib: number;
-  selectedFragment: number;
-};
-
-const props = withDefaults(defineProps<Props>(), {
-  libs: () => [],
-  selectedLib: 0,
-  selectedFragment: 0,
-});
-const emit = defineEmits(['update:selectedLib', 'update:selectedFragment', 'clickFragment']);
-
-const { t } = useI18n();
-
-const activeLib = ref(props.selectedLib);
-const selectedLib = ref(props.selectedLib);
-const selectedFragment = ref(props.selectedFragment);
-
-const libs = computed(() => props.libs);
-
-watch(activeLib, () => {
-  if (activeLib.value) {
-    selectedLib.value = +activeLib.value;
-  }
-  emit('update:selectedLib', selectedLib.value);
-});
-watch(
-  () => props.selectedLib,
-  () => (activeLib.value = selectedLib.value = props.selectedLib)
-);
-watch(
-  () => props.selectedFragment,
-  () => (selectedFragment.value = props.selectedFragment)
-);
-
-const switchItem = (idx: number) => {
-  selectedFragment.value = idx;
-  emit('update:selectedFragment', idx);
-  emit('clickFragment', idx);
-};
-
-const icon = (prop: { [prop: string]: any }) => {
-  const bool = prop.panelKey === activeLib.value;
-  return bool ? h(CaretDownOutlined) : h(CaretRightOutlined);
-};
-</script>
 
 <style scoped lang="less">
 .ant-collapse {
@@ -103,7 +75,7 @@ const icon = (prop: { [prop: string]: any }) => {
 
     .ant-collapse-arrow {
       position: relative;
-      top: 0;
+      top: -2px;
       left: 0;
       transform: none;
       font-size: 10px;

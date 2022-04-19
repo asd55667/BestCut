@@ -11,6 +11,7 @@ import { configMockPlugin } from './mock';
 import { configAutoImportPlugin } from './auto-import';
 import { configPagePlugin } from './page';
 import { configI18nPlugin } from './i18n';
+import { configComponentsPlugin } from './components';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const vitePlugins: (Plugin | Plugin[])[] = [
@@ -30,6 +31,8 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   vitePlugins.push(configMockPlugin(isBuild));
 
   vitePlugins.push(configAutoImportPlugin());
+
+  vitePlugins.push(configComponentsPlugin());
 
   vitePlugins.push(configPagePlugin());
 

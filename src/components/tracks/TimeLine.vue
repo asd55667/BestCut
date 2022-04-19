@@ -1,44 +1,3 @@
-<template>
-  <div
-    ref="timelineRef"
-    @pointerover="onTimelineOver"
-    @pointerleave="onTimelineLeave"
-    @mousewheel="onTimelineScroll"
-  >
-    <div class="h-2.5" absolute w-screen :style="`margin-left: ${marginLeft}px;`">
-      <canvas id="scaler" h-full w-full m-0 />
-    </div>
-    <div
-      v-show="hover"
-      class="timeline-hover absolute h-full w-px bg-yellow-500 top-0 z-10 pointer-events-none"
-      :style="`left: ${hoverX}px`"
-    />
-
-    <div
-      ref="locator"
-      :class="[
-        'timeline-locator absolute h-full w-px z-10',
-        isMapEmpty ? 'pointer-events-none' : '',
-      ]"
-      :style="`left: ${locatorX}px;${''}`"
-    >
-      <div
-        border="2 rounded-bl-1/2 rounded-br-1/2"
-        :class="[
-          'timeline-locator-head w-2.4 h-3.4 -translate-x-1/2',
-          isDragging ? 'bg-white' : '',
-          isMapEmpty ? 'border-gray-400' : 'border-white',
-        ]"
-      ></div>
-      <div h="[calc(100%-0.85rem)]">
-        <div :class="[isMapEmpty ? 'bg-gray-500' : 'bg-white']" h-full w-px top-0 />
-      </div>
-    </div>
-
-    <slot></slot>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import type { ComponentPublicInstance } from 'vue';
 
@@ -148,3 +107,44 @@ onUnmounted(() => {
   mLocator && mLocator.stopAllListeners();
 });
 </script>
+
+<template>
+  <div
+    ref="timelineRef"
+    @pointerover="onTimelineOver"
+    @pointerleave="onTimelineLeave"
+    @mousewheel="onTimelineScroll"
+  >
+    <div class="h-2.5" absolute w-screen :style="`margin-left: ${marginLeft}px;`">
+      <canvas id="scaler" h-full w-full m-0 />
+    </div>
+    <div
+      v-show="hover"
+      class="timeline-hover absolute h-full w-px bg-yellow-500 top-0 z-10 pointer-events-none"
+      :style="`left: ${hoverX}px`"
+    />
+
+    <div
+      ref="locator"
+      :class="[
+        'timeline-locator absolute h-full w-px z-10',
+        isMapEmpty ? 'pointer-events-none' : '',
+      ]"
+      :style="`left: ${locatorX}px;${''}`"
+    >
+      <div
+        border="2 rounded-bl-1/2 rounded-br-1/2"
+        :class="[
+          'timeline-locator-head w-2.4 h-3.4 -translate-x-1/2',
+          isDragging ? 'bg-white' : '',
+          isMapEmpty ? 'border-gray-400' : 'border-white',
+        ]"
+      ></div>
+      <div h="[calc(100%-0.85rem)]">
+        <div :class="[isMapEmpty ? 'bg-gray-500' : 'bg-white']" h-full w-px top-0 />
+      </div>
+    </div>
+
+    <slot></slot>
+  </div>
+</template>

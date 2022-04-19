@@ -1,12 +1,3 @@
-<template>
-  <div
-    ref="spliter"
-    :class="[vertical ? 'splitterV' : 'splitterH']"
-    bg-black
-    :style="splitterStyle"
-  />
-</template>
-
 <script lang="ts" setup>
 type Props = {
   vertical?: boolean;
@@ -90,14 +81,11 @@ const splitterStyle = computed(() => {
 });
 </script>
 
-<style scoped>
-.splitterV {
-  cursor: col-resize;
-  height: 100%;
-}
-
-.splitterH {
-  cursor: row-resize;
-  width: 100%;
-}
-</style>
+<template>
+  <div
+    ref="spliter"
+    :class="[vertical ? 'h-full cursor-col-resize' : 'w-full cursor-row-resize']"
+    bg-black
+    :style="splitterStyle"
+  />
+</template>

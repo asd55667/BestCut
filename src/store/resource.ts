@@ -3,8 +3,7 @@ import type { ResourceTab, ResourceLib } from '@/logic/resource/tab';
 
 import { defineStore } from 'pinia';
 
-import { store } from '@/store';
-import { tabsData } from '@/components/resource/routes';
+import { TabsData } from '@/components/resource/routes';
 import * as Resource from '@/logic/resource';
 import { ResourceType } from '@/enums/resource';
 
@@ -31,9 +30,9 @@ const ResourceMap = {
 export const useResourceStore = defineStore({
   id: 'app-resource',
   state: (): ResourceState => ({
-    tabs: tabsData,
-    activeTab: 0,
-    selectedLib: 0,
+    tabs: TabsData,
+    activeTab: 1,
+    selectedLib: 2,
     selectedFragment: 0,
     resource: undefined,
     resizeProportion: 1,
@@ -53,14 +52,6 @@ export const useResourceStore = defineStore({
     },
   },
   actions: {
-    updateFragments(data: ResourceFragment[]) {
-      data.forEach((fragment) => {
-        fragment.list = fragment.list.map((resource) => new ResourceMap[resource.type](resource));
-      });
-      if (data[0].name === '收藏') data.splice(1, 0, ...this.currentLib.fragments);
-      else data = this.currentLib.fragments.concat(data);
-      this.currentLib.fragments = data;
-    },
     switchFragment(idx: number) {
       this.selectedFragment = idx;
       return idx;
@@ -108,7 +99,3 @@ export const useResourceStore = defineStore({
     },
   },
 });
-
-export function useResourceStoreWithOut() {
-  return useResourceStore(store);
-}

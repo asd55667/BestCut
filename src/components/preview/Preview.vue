@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons-vue';
 import { Slider } from 'ant-design-vue';
 
-import SectionBox from '@/layouts/SectionBox.vue';
+import SectionLayout from '@/layouts/SectionBox.vue';
 import { useFullScreen } from '@/hooks/useFullScreen';
 
 import { useResourceStore } from '@/store/resource';
@@ -152,7 +152,7 @@ export default defineComponent({
               isInFullScreen.value ? 'flex left-5 leading-none bottom-1/3' : 'flex flex-col left-2',
             ]}
           >
-            <div class="color-[aqua]">{current.value}</div>
+            <div class="text-[aqua]">{current.value}</div>
             <div
               class={['border-gray-200', isInFullScreen.value ? 'ml-2 border-l px-1' : 'border-t']}
             >
@@ -205,9 +205,9 @@ export default defineComponent({
             </div>
           </div>
         ) : (
-          <SectionBox footer title={title.value}>
+          <SectionLayout footer title={title.value}>
             {{ content, footer }}
-          </SectionBox>
+          </SectionLayout>
         )}
       </div>
     );

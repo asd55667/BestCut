@@ -16,13 +16,13 @@ import { resourceWrapper } from './Resource';
 import { useLocale } from '@/hooks/useLocale';
 const { t } = useLocale();
 
-export const tabsData: ResourceTab[] = [
+export const TabsData: ResourceTab[] = [
   {
     icon: h(PlayCircleOutlined),
     tabName: 'media',
     name: t('resource.media'),
     libs: [
-      new ResourceLib('local', resourceWrapper({ loc: 'wrap-top', offline: true })),
+      new ResourceLib('local', resourceWrapper({ loc: 'wrap-top', offline: true }), true),
       new ResourceLib('mediaMaterial', resourceWrapper()),
     ],
   },

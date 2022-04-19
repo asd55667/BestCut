@@ -8,6 +8,7 @@ export class ResourceLib {
   constructor(
     public libName: string,
     public component: (list: ResourceFragment[]) => JSX.Element,
+    public offline = false,
     public update: number = -1
   ) {
     this.fragments = RESOURCES[libName] || [];

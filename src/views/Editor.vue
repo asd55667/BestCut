@@ -1,5 +1,19 @@
+<script lang="ts" setup>
+import { ExportOutlined } from '@ant-design/icons-vue';
+
+import { useTrackStore } from '@/store/track';
+
+const { t } = useI18n();
+
+const trackStore = useTrackStore();
+
+const exportWorkspace = () => {
+  trackStore.export();
+};
+</script>
+
 <template>
-  <Layout>
+  <EditorLayout>
     <template #header>
       <div h-full flex justify-between items-center text-white>
         <div class="left" text="xs gray-400">
@@ -19,43 +33,15 @@
       </div>
     </template>
 
-    <template #resource>
-      <ResourceBox />
-    </template>
+    <template #resource> <ResourceSection /> </template>
 
-    <template #preview>
-      <Preview />
-    </template>
+    <template #preview> <!-- <Preview /> --> </template>
 
-    <template #config>
-      <ConfigPanel />
-    </template>
+    <template #config> <!-- <ConfigPanel /> --> </template>
 
-    <template #track>
-      <Tracks />
-    </template>
-  </Layout>
+    <template #track> <!-- <Tracks /> --> </template>
+  </EditorLayout>
 </template>
-
-<script lang="ts" setup>
-import { ExportOutlined } from '@ant-design/icons-vue';
-
-import Layout from '@/layouts/index.vue';
-import Preview from '@/components/preview/index.vue';
-import ResourceBox from '@/components/resource/index.vue';
-import Tracks from '@/components/tracks/index.vue';
-import ConfigPanel from '@/components/config-panel/index.vue';
-
-import { useTrackStore } from '@/store/track';
-
-const { t } = useI18n();
-
-const trackStore = useTrackStore();
-
-const exportWorkspace = () => {
-  trackStore.export();
-};
-</script>
 
 <route lang="yaml">
 meta:
