@@ -2,10 +2,10 @@
 import { Collapse, CollapsePanel } from 'ant-design-vue';
 import { CaretRightOutlined, CaretDownOutlined } from '@ant-design/icons-vue';
 import { useResource } from './useResource';
-
-const { t } = useI18n();
 const { libs, libIndex, tabIndex, fragmentIdx, setLibIndex, setFragmentIdx, updateFragments } =
   useResource();
+
+const { t } = useI18n();
 
 const activeLib = ref(libIndex.value.toString());
 watch(activeLib, (val: string) => {
@@ -15,6 +15,17 @@ watch([libIndex, tabIndex], ([val, _]: [number, number]) => {
   activeLib.value = val.toString();
   updateFragments();
 });
+
+const scrollTo = (idx: number) => {
+  const resourceList = document.getElementById('resource-list') as HTMLElement;
+  if (!resourceList) return;
+
+  const { children } = resourceList;
+  if (children.length < idx) return;
+  let h = 0;
+  for (let i = 0; i < idx; i++) h += children[i].clientHeight;
+  resourceList.scrollTop = h;
+};
 
 const icon = (prop: { [prop: string]: any }) => {
   const bool = prop.panelKey === activeLib.value;
@@ -44,7 +55,7 @@ updateFragments();
           v-for="(fragment, j) in resource.fragments"
           :key="fragment.name"
           :class="[fragmentIdx === j ? 'text-[aqua]' : '', 'my-2']"
-          @click="setFragmentIdx(j)"
+          @click="setFragmentIdx(j), scrollTo(j)"
         >
           {{ fragment.name }}
         </div>

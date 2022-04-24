@@ -5,7 +5,7 @@ import * as Resource from '@/logic/resource';
 import { ResourceType } from '@/enums/resource';
 
 const tabsData = ref(TabsData);
-const currentTabIndex = ref(0);
+const currentTabIndex = ref(1);
 const currentLibIndex = ref<number[]>(new Array(tabsData.value.length).fill(0));
 const currentFragmentIdx = ref(0);
 
@@ -46,9 +46,9 @@ export function useResource() {
         });
         if (lib[0]?.name === '收藏') lib.splice(1, 0, ...currentLib.value.fragments);
         else lib = currentLib.value.fragments.concat(lib);
-        console.log(lib.length);
+        // console.log(lib.length);
         currentLib.value.fragments = lib;
-        console.log(data.update, update);
+        // console.log(data.update, update);
       }
       currentLib.value.update = new Date().getTime();
     }

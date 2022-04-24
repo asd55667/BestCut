@@ -1,17 +1,41 @@
 <script lang="ts" setup>
 import { ResourceFragment } from '@/logic/resource';
-import { ResourceLib } from '@/logic/resource/tab';
-import Resource from './index.vue';
 
-//const emits = defineEmits([])
-const props = defineProps<{ lib: ResourceLib }>();
-const fragments = computed(() => props.lib.fragments);
+import { useResource } from './useResource';
+const { currentLib, fragmentIdx, setFragmentIdx } = useResource();
+const fragments = computed(() => currentLib.value.fragments);
 const isEmpty = (fragment: ResourceFragment) => !fragment.list.length;
+
+let stepArr: number[][] = [];
+
+const switchFragment = (e: WheelEvent) => {
+  const resourceList = e.currentTarget as HTMLElement;
+  if (!resourceList) return;
+  const { scrollTop, children } = resourceList;
+
+  if (!stepArr.length || stepArr.length !== currentLib.value.fragments.length) {
+    stepArr = [];
+    let h = 0;
+    for (let i = 0; i < children.length; i++) {
+      stepArr.push([h, h + children[i].clientHeight]);
+      h += children[i].clientHeight;
+    }
+  }
+
+  for (let i = 0; i < stepArr.length; i++) {
+    const [lo, hi] = stepArr[i];
+    if (scrollTop >= lo && scrollTop <= hi && fragmentIdx.value !== i) {
+      setFragmentIdx(i);
+    }
+  }
+
+  e.stopPropagation();
+};
 </script>
 
 <template>
   <div h-full m-1>
-    <div id="resource-list" h-full overflow-y-scroll>
+    <div id="resource-list" h-full overflow-y-scroll @scroll="switchFragment">
       <!--  -->
       <div v-for="(fragment, i) in fragments" :key="i">
         <!--  -->
@@ -25,13 +49,13 @@ const isEmpty = (fragment: ResourceFragment) => !fragment.list.length;
               v-for="(resource, j) in fragment.list"
               :key="j"
               class="local-resource-list relative m-2 text-xs"
-              :offline="props.lib?.offline"
+              :offline="currentLib?.offline"
               :resource="resource"
               :usable="resource.usable || fragment.usable"
               :favorite="resource.favorite || fragment.favorite"
               :showAdd="resource.showAdd || fragment.showAdd"
             />
-            // onEvent={offline ? () => {} : () => {}} // TODO: 添加离线资源
+            <!-- onEvent={offline ? () => {} : () => {}} // TODO: 添加离线资源 -->
           </div>
         </div>
 

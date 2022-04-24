@@ -4,8 +4,6 @@ import type { ResourceTab, ResourceLib } from '@/logic/resource/tab';
 import { defineStore } from 'pinia';
 
 import { TabsData } from '@/components/resource/routes';
-import * as Resource from '@/logic/resource';
-import { ResourceType } from '@/enums/resource';
 
 interface ResourceState {
   tabs: ResourceTab[];
@@ -15,17 +13,6 @@ interface ResourceState {
   resource?: ResourceItem;
   resizeProportion: number;
 }
-
-const ResourceMap = {
-  [ResourceType.Video]: Resource.VideoResource,
-  [ResourceType.Audio]: Resource.AudioResource,
-  [ResourceType.Picture]: Resource.PictureResource,
-  [ResourceType.Sticker]: Resource.StickerResource,
-  [ResourceType.Text]: Resource.TextResource,
-  [ResourceType.Effect]: Resource.EffectResource,
-  [ResourceType.Filter]: Resource.FilterResource,
-  [ResourceType.Transition]: Resource.TransitionResource,
-};
 
 export const useResourceStore = defineStore({
   id: 'app-resource',
