@@ -1,24 +1,3 @@
-<template>
-  <div absolute w-full h-full top-0 left-0>
-    <div
-      ref="trackLeftRef"
-      @pointerdown.stop="onTrackLeft(track, i, j)"
-      @pointerup.stop="offTrackLeft"
-      class="track-scale -left-0"
-    >
-      <MoreOutlined absolute left--1 w-2 />
-    </div>
-    <div
-      ref="trackRightRef"
-      @pointerdown.stop="onTrackRight(track, i, j)"
-      @pointerup.stop="offTrackRight"
-      class="track-scale right-0"
-    >
-      <MoreOutlined absolute right--1 />
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
 import type { ComponentPublicInstance, PropType } from 'vue';
 
@@ -128,6 +107,27 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <div absolute w-full h-full top-0 left-0>
+    <div
+      ref="trackLeftRef"
+      @pointerdown.stop="onTrackLeft(track, i, j)"
+      @pointerup.stop="offTrackLeft"
+      class="track-scale -left-0"
+    >
+      <MoreOutlined absolute left--1 w-2 />
+    </div>
+    <div
+      ref="trackRightRef"
+      @pointerdown.stop="onTrackRight(track, i, j)"
+      @pointerup.stop="offTrackRight"
+      class="track-scale right-0"
+    >
+      <MoreOutlined absolute right--1 />
+    </div>
+  </div>
+</template>
 
 <style lang="less" scoped>
 .track-scale {

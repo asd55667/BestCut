@@ -1,90 +1,3 @@
-<template>
-  <div
-    class="flex w-full"
-    @dragenter="onTrackEnter"
-    @dragover="onTrackOver"
-    @dragleave="onTrackLeave"
-    @dragend="onTrackend"
-    @drop="onTrackDrop"
-  >
-    <div class="track-container-head" h-full :style="`flex:0 0 ${TrackHeadWidth}px;`">
-      <slot></slot>
-    </div>
-
-    <div class="list" w-full h-full flex flex-col justify-center>
-      <div
-        v-for="(tracks, i) in lists"
-        :key="i"
-        :class="[
-          'track-list relative flex w-full my-2',
-          draggedIdxs.i === i || activeIdxs.i === i
-            ? 'bg-#383839 border-b-1 border-t-1 border-#4d4d4e'
-            : '',
-        ]"
-      >
-        <!-- PlaceholderInMain -->
-        <div
-          v-if="inMain() && !tracks.length"
-          :class="[
-            'rounded-md w-full flex items-center justify-start pl-10 opacity-50 mr-2',
-            !trackStore.isMapEmpty() || trackStore.isResourceOver
-              ? 'h-24'
-              : 'border border-light-50 border-dashed h-20',
-          ]"
-          bg="[rgba(225,225,225,0.1)]"
-        >
-          <div>
-            <span v-if="trackStore.isMapEmpty() && !trackStore.isResourceOver">
-              视频拖拽到这里
-            </span>
-          </div>
-        </div>
-
-        <!-- TrackList -->
-        <div
-          v-else
-          v-for="(track, j) in tracks"
-          :key="j"
-          draggable="true"
-          @dragstart="(e: DragEvent) => trackDragger.dragstart(e, track, i, j, props.type)"
-        >
-          <Track
-            :track="track"
-            :isMute="isMute"
-            @pointerdown="(e: PointerEvent) => onTrackDown(e, track, i, j)"
-            v-click-outside:[exclude]="() => onClickOutside(track)"
-          >
-            <TrackBorder
-              v-if="track.active"
-              :track="track"
-              :i="i"
-              :j="j"
-              :lists="lists"
-              v-model:canDrag="canDrag"
-            />
-          </Track>
-        </div>
-
-        <!-- Shadow -->
-        <div
-          v-if="draggedIdxs.i === i && activeTrak"
-          class="shadow absolute rounded-sm m-px px-1 bg-gray-300 opacity-10 h-full pointer-events-none"
-          :style="`width: ${Number(activeTrak.width)}px;
-                    top:0; left: ${shadowLeft}px;`"
-        />
-
-        <!-- NewTrackList -->
-        <div
-          v-if="newListLine.i === i"
-          class="new-list-line bg-#276161 absolute w-full h-0.5 left-0 pointer-events-none"
-          :style="`transform: translateY(${newListLine.top ? '-' : ''}0.6rem);
-                      ${newListLine.top ? 'top' : 'bottom'}: 0;`"
-        />
-      </div>
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { ClickOutside as vClickOutside } from '@/directives';
 
@@ -600,6 +513,93 @@ onMounted(() => {
   }
 });
 </script>
+
+<template>
+  <div
+    class="flex w-full"
+    @dragenter="onTrackEnter"
+    @dragover="onTrackOver"
+    @dragleave="onTrackLeave"
+    @dragend="onTrackend"
+    @drop="onTrackDrop"
+  >
+    <div class="track-container-head" h-full :style="`flex:0 0 ${TrackHeadWidth}px;`">
+      <slot></slot>
+    </div>
+
+    <div class="list" w-full h-full flex flex-col justify-center>
+      <div
+        v-for="(tracks, i) in lists"
+        :key="i"
+        :class="[
+          'track-list relative flex w-full my-2',
+          draggedIdxs.i === i || activeIdxs.i === i
+            ? 'bg-#383839 border-b-1 border-t-1 border-#4d4d4e'
+            : '',
+        ]"
+      >
+        <!-- PlaceholderInMain -->
+        <div
+          v-if="inMain() && !tracks.length"
+          :class="[
+            'rounded-md w-full flex items-center justify-start pl-10 opacity-50 mr-2',
+            !trackStore.isMapEmpty() || trackStore.isResourceOver
+              ? 'h-24'
+              : 'border border-light-50 border-dashed h-20',
+          ]"
+          bg="[rgba(225,225,225,0.1)]"
+        >
+          <div>
+            <span v-if="trackStore.isMapEmpty() && !trackStore.isResourceOver">
+              视频拖拽到这里
+            </span>
+          </div>
+        </div>
+
+        <!-- TrackList -->
+        <div
+          v-else
+          v-for="(track, j) in tracks"
+          :key="j"
+          draggable="true"
+          @dragstart="(e: DragEvent) => trackDragger.dragstart(e, track, i, j, props.type)"
+        >
+          <Track
+            :track="track"
+            :isMute="isMute"
+            @pointerdown="(e: PointerEvent) => onTrackDown(e, track, i, j)"
+            v-click-outside:[exclude]="() => onClickOutside(track)"
+          >
+            <TrackBorder
+              v-if="track.active"
+              :track="track"
+              :i="i"
+              :j="j"
+              :lists="lists"
+              v-model:canDrag="canDrag"
+            />
+          </Track>
+        </div>
+
+        <!-- Shadow -->
+        <div
+          v-if="draggedIdxs.i === i && activeTrak"
+          class="shadow absolute rounded-sm m-px px-1 bg-gray-300 opacity-10 h-full pointer-events-none"
+          :style="`width: ${Number(activeTrak.width)}px;
+                    top:0; left: ${shadowLeft}px;`"
+        />
+
+        <!-- NewTrackList -->
+        <div
+          v-if="newListLine.i === i"
+          class="new-list-line bg-#276161 absolute w-full h-0.5 left-0 pointer-events-none"
+          :style="`transform: translateY(${newListLine.top ? '-' : ''}0.6rem);
+                      ${newListLine.top ? 'top' : 'bottom'}: 0;`"
+        />
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="less">
 .video-container {

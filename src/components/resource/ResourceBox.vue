@@ -1,83 +1,3 @@
-<template>
-  <div
-    :class="[
-      'resource-box group relative rounded-md overflow-hidden',
-      'w-full h-full bg-#070709',
-      resource.active ? 'border-solid border-2px border-[aqua]' : '',
-    ]"
-    ref="resourceRef"
-    @click="play"
-  >
-    <div
-      v-if="resource.active"
-      class="timeline-locator absolute rounded-md h-full w-px bg-yellow-500 top-0 z-10"
-      :style="{ left: `${ratio}%` }"
-    ></div>
-
-    <div class="resource-content overflow-hidden absolute h-full w-full">
-      <div v-if="resource instanceof AudioResource" class="h-full flex items-center">
-        <img class="rounded-md h-5/6 w-2/5 ml-2 mr-1" draggable="false" :src="resource.thumbnail" />
-
-        <div class="text-xs flex flex-col justify-between h-5/6">
-          <div>
-            <div text="#999">{{ resource.album }}</div>
-            <div text="#474747">{{ resource.author }}</div>
-          </div>
-          <div v-if="resource.album && resource.author" text="#474747">
-            {{ resource.duration }}
-          </div>
-        </div>
-      </div>
-
-      <div
-        v-else
-        class="h-full w-full rounded-md"
-        @pointerover="onPointerOver"
-        @pointerleave="onPointerLeave"
-      >
-        <img
-          class="h-full w-full"
-          draggable="false"
-          :src="isOver && !(resource instanceof VideoResource) ? resource.src : resource.thumbnail"
-        />
-      </div>
-    </div>
-
-    <!-- tl referenced -->
-    <div v-if="referenced && offline" class="absolute top-1 left-1" bg="[rgb(255,255,255,0.3)]">
-      <div>已添加</div>
-    </div>
-
-    <div class="absolute top-1 right-1">
-      <FileImageOutlined v-if="resource instanceof PictureResource" />
-      <div
-        v-if="
-          resource instanceof VideoResource ||
-          (resource instanceof AudioResource && !resource.album && !resource.author)
-        "
-      >
-        {{ resource.duration }}
-      </div>
-    </div>
-
-    <!-- br icons  -->
-    <StarFilled
-      v-if="favorite"
-      :class="[resource.checked ? 'text-yellow-400' : '', 'favorite absolute bottom-1 right-5']"
-      @click.stop="onChecked"
-    />
-
-    <PlusCircleFilled
-      v-if="usable"
-      :class="[showAdd ? '' : 'hidden', 'absolute bottom-1 right-1']"
-      group-hover="text-[aqua] block"
-      @click.stop="add2Track"
-    />
-
-    <DownloadOutlined v-if="!usable && !isLoading" class="download absolute bottom-1 right-1" />
-    <LoadingOutlined v-if="!usable && isLoading" class="downloading absolute bottom-1 right-1" />
-  </div>
-</template>
 <script lang="ts" setup>
 import { ResourceItem, AudioResource, VideoResource, PictureResource } from '@/logic/resource';
 
@@ -209,3 +129,84 @@ const onPointerLeave = () => {
   isOver.value = false;
 };
 </script>
+
+<template>
+  <div
+    :class="[
+      'resource-box group relative rounded-md overflow-hidden',
+      'w-full h-full bg-#070709',
+      resource.active ? 'border-solid border-2px border-[aqua]' : '',
+    ]"
+    ref="resourceRef"
+    @click="play"
+  >
+    <div
+      v-if="resource.active"
+      class="timeline-locator absolute rounded-md h-full w-px bg-yellow-500 top-0 z-10"
+      :style="{ left: `${ratio}%` }"
+    ></div>
+
+    <div class="resource-content overflow-hidden absolute h-full w-full">
+      <div v-if="resource instanceof AudioResource" class="h-full flex items-center">
+        <img class="rounded-md h-5/6 w-2/5 ml-2 mr-1" draggable="false" :src="resource.thumbnail" />
+
+        <div class="text-xs flex flex-col justify-between h-5/6">
+          <div>
+            <div text="#999">{{ resource.album }}</div>
+            <div text="#474747">{{ resource.author }}</div>
+          </div>
+          <div v-if="resource.album && resource.author" text="#474747">
+            {{ resource.duration }}
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-else
+        class="h-full w-full rounded-md"
+        @pointerover="onPointerOver"
+        @pointerleave="onPointerLeave"
+      >
+        <img
+          class="h-full w-full"
+          draggable="false"
+          :src="isOver && !(resource instanceof VideoResource) ? resource.src : resource.thumbnail"
+        />
+      </div>
+    </div>
+
+    <!-- tl referenced -->
+    <div v-if="referenced && offline" class="absolute top-1 left-1" bg="[rgb(255,255,255,0.3)]">
+      <div>已添加</div>
+    </div>
+
+    <div class="absolute top-1 right-1">
+      <FileImageOutlined v-if="resource instanceof PictureResource" />
+      <div
+        v-if="
+          resource instanceof VideoResource ||
+          (resource instanceof AudioResource && !resource.album && !resource.author)
+        "
+      >
+        {{ resource.duration }}
+      </div>
+    </div>
+
+    <!-- br icons  -->
+    <StarFilled
+      v-if="favorite"
+      :class="[resource.checked ? 'text-yellow-400' : '', 'favorite absolute bottom-1 right-5']"
+      @click.stop="onChecked"
+    />
+
+    <PlusCircleFilled
+      v-if="usable"
+      :class="[showAdd ? '' : 'hidden', 'absolute bottom-1 right-1']"
+      group-hover="text-[aqua] block"
+      @click.stop="add2Track"
+    />
+
+    <DownloadOutlined v-if="!usable && !isLoading" class="download absolute bottom-1 right-1" />
+    <LoadingOutlined v-if="!usable && isLoading" class="downloading absolute bottom-1 right-1" />
+  </div>
+</template>

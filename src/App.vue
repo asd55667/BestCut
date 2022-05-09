@@ -1,9 +1,3 @@
-<template>
-  <ConfigProvider :locale="getAntdLocale">
-    <RouterView />
-  </ConfigProvider>
-</template>
-
 <script lang="ts" setup>
 import { ConfigProvider } from 'ant-design-vue';
 import { useLocale } from '@/hooks/useLocale';
@@ -13,3 +7,9 @@ useTitle();
 
 const { getAntdLocale } = useLocale();
 </script>
+
+<template>
+  <ConfigProvider :locale="getAntdLocale">
+    <RouterView />
+  </ConfigProvider>
+</template>

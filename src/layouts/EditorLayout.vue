@@ -1,49 +1,3 @@
-<template>
-  <Layout>
-    <Layout.Header>
-      <slot name="header">
-        <div center h-full>
-          {{ t('common.header') }}
-          <a-button @click="switchLang" absolute right-36>
-            {{ getLocaleText }}
-          </a-button>
-        </div>
-      </slot>
-    </Layout.Header>
-
-    <Layout class="layout-content" :style="`height: ${95 - trackRatio}vh;`" bg-black px-2>
-      <Layout.Sider :width="resourceW">
-        <slot name="resource">
-          <div center bg-blue-500 rounded-md>{{ t('common.resource') }}</div>
-        </slot>
-      </Layout.Sider>
-
-      <Splitter class="splitter" vertical :value="splitterWidth" @width="onWidthChangeLeft" />
-
-      <Layout.Content class="bg-black">
-        <slot name="preview">
-          <div center rounded-md bg-green-500>{{ t('common.preview') }}</div>
-        </slot>
-      </Layout.Content>
-
-      <Splitter class="splitter" vertical :value="splitterWidth" @width="onWidthChangeRight" />
-      <Layout.Sider :width="configW">
-        <slot name="config">
-          <div center rounded-md bg-red-500>{{ t('common.config') }}</div>
-        </slot>
-      </Layout.Sider>
-    </Layout>
-
-    <Splitter class="splitter" :value="splitterHeight" @height="onHeightChange" />
-
-    <Layout.Footer bg-black :style="`height: calc(${trackRatio}vh - ${splitterHeight}px)`">
-      <slot name="track">
-        <div center rounded-md bg-purple-500>{{ t('common.track') }}</div>
-      </slot>
-    </Layout.Footer>
-  </Layout>
-</template>
-
 <script lang="ts" setup>
 import { Layout } from 'ant-design-vue';
 
@@ -174,6 +128,52 @@ const switchLang = async () => {
   location.reload();
 };
 </script>
+
+<template>
+  <Layout>
+    <Layout.Header>
+      <slot name="header">
+        <div center h-full>
+          {{ t('common.header') }}
+          <a-button @click="switchLang" absolute right-36>
+            {{ getLocaleText }}
+          </a-button>
+        </div>
+      </slot>
+    </Layout.Header>
+
+    <Layout class="layout-content" :style="`height: ${95 - trackRatio}vh;`" bg-black px-2>
+      <Layout.Sider :width="resourceW">
+        <slot name="resource">
+          <div center bg-blue-500 rounded-md>{{ t('common.resource') }}</div>
+        </slot>
+      </Layout.Sider>
+
+      <Splitter class="splitter" vertical :value="splitterWidth" @width="onWidthChangeLeft" />
+
+      <Layout.Content class="bg-black">
+        <slot name="preview">
+          <div center rounded-md bg-green-500>{{ t('common.preview') }}</div>
+        </slot>
+      </Layout.Content>
+
+      <Splitter class="splitter" vertical :value="splitterWidth" @width="onWidthChangeRight" />
+      <Layout.Sider :width="configW">
+        <slot name="config">
+          <div center rounded-md bg-red-500>{{ t('common.config') }}</div>
+        </slot>
+      </Layout.Sider>
+    </Layout>
+
+    <Splitter class="splitter" :value="splitterHeight" @height="onHeightChange" />
+
+    <Layout.Footer bg-black :style="`height: calc(${trackRatio}vh - ${splitterHeight}px)`">
+      <slot name="track">
+        <div center rounded-md bg-purple-500>{{ t('common.track') }}</div>
+      </slot>
+    </Layout.Footer>
+  </Layout>
+</template>
 
 <style lang="less" scoped>
 .ant-layout-header {

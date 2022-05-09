@@ -1,3 +1,25 @@
+<script lang="ts" setup>
+import type { PropType } from 'vue';
+import { Layout } from 'ant-design-vue';
+
+import { isString } from '@/utils/is';
+
+defineProps({
+  title: {
+    type: [String, Object],
+    default: 'header',
+  },
+  sider: {
+    type: Object as PropType<{ class: string; width: number }>,
+    default: null,
+  },
+  footer: {
+    type: Boolean,
+    default: false,
+  },
+});
+</script>
+
 <template>
   <Layout class="function-area-box" text-white h-full>
     <Layout.Header rounded-t-md flex items-center p-0 border-b border-black>
@@ -38,27 +60,7 @@
     </Layout>
   </Layout>
 </template>
-<script lang="ts" setup>
-import type { PropType } from 'vue';
-import { Layout } from 'ant-design-vue';
 
-import { isString } from '@/utils/is';
-
-defineProps({
-  title: {
-    type: [String, Object],
-    default: 'header',
-  },
-  sider: {
-    type: Object as PropType<{ class: string; width: number }>,
-    default: null,
-  },
-  footer: {
-    type: Boolean,
-    default: false,
-  },
-});
-</script>
 <style scoped lang="less">
 .ant-layout {
   background-color: #000;
