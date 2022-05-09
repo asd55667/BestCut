@@ -10,7 +10,6 @@ import { Slider } from 'ant-design-vue';
 import SectionLayout from '@/layouts/SectionBox.vue';
 import { useFullScreen } from '@/hooks/useFullScreen';
 
-import { useResourceStore } from '@/store/resource';
 import { usePreviewStore } from '@/store/preview';
 import { useTrackStore } from '@/store/track';
 import { CanvasId, PlayerId, Duration0 } from '@/settings/playerSetting';
@@ -29,12 +28,11 @@ export default defineComponent({
     const { t } = useI18n();
     // const title = t('components.preview');
 
-    const resourceStore = useResourceStore();
     const previewStore = usePreviewStore();
     const trackStore = useTrackStore();
 
     const title = computed(() => {
-      const { resource } = resourceStore;
+      const { resource } = trackStore;
       if (resource)
         return h('div', { class: 'h-full flex items-center' }, [
           h('span', { class: 'w-1 h-1 rounded-md bg-yellow-500 mr-1' }),
@@ -44,18 +42,18 @@ export default defineComponent({
     });
 
     const active = computed(() => {
-      return Boolean(resourceStore.resource) || !trackStore.isMapEmpty();
+      return Boolean(trackStore.resource) || !trackStore.isMapEmpty();
     });
     const total = computed(() => {
       let _total = Duration0;
       if (!trackStore.isMapEmpty()) _total = trackStore.total;
-      if (resourceStore.resource) _total = previewStore.total;
+      if (trackStore.resource) _total = previewStore.total;
       return _total;
     });
     const current = computed(() => {
       let _current = Duration0;
       if (!trackStore.isMapEmpty()) _current = trackStore.current;
-      if (resourceStore.resource) _current = previewStore.current;
+      if (trackStore.resource) _current = previewStore.current;
       return _current;
     });
 
@@ -64,13 +62,13 @@ export default defineComponent({
 
     const paused = computed(() => {
       if (!active.value) return true;
-      if (resourceStore.resource) return previewStore.player.paused;
+      if (trackStore.resource) return previewStore.player.paused;
       if (!trackStore.isMapEmpty()) return trackStore.manager.paused;
       return true;
     });
 
     const store = computed(() =>
-      resourceStore.resource && previewStore.player.active ? previewStore : trackStore
+      trackStore.resource && previewStore.player.active ? previewStore : trackStore
     );
     const pauseResume = () => {
       logger.log(LogFlag.Timeline, 'pauseResume');
@@ -112,7 +110,7 @@ export default defineComponent({
         trackStore.manager.holdOn();
       });
     }
-    watch([() => !!resourceStore.resource, () => !trackStore.isMapEmpty()], (bs: boolean[]) => {
+    watch([() => !!trackStore.resource, () => !trackStore.isMapEmpty()], (bs: boolean[]) => {
       if (bs[0] || bs[1]) window.addEventListener('keydown', shortcut);
       else window.removeEventListener('keydown', shortcut);
     });

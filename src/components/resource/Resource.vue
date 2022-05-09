@@ -44,7 +44,6 @@ import { PlayerId } from '@/settings/playerSetting';
 import { ResourceItem, TextResource, AudioResource, StickerResource } from '@/logic/resource';
 import { setStyle, toggleClass } from '@/utils/dom';
 import { useTrackStore } from '@/store/track';
-import { useResourceStore } from '@/store/resource';
 import { usePreviewStore } from '@/store/preview';
 
 import { ClickOutside as vClickOutside } from '@/directives';
@@ -96,7 +95,6 @@ watch(
 );
 
 const trackStore = useTrackStore();
-const resourceStore = useResourceStore();
 const previewStore = usePreviewStore();
 watch(
   () => trackStore.isResourceOver,
@@ -229,7 +227,7 @@ onBeforeMount(() => {
 
 const onClickOutside = () => {
   if (props.resource.active) previewStore.player.stop();
-  if (resourceStore.resource) resourceStore.setResource(undefined);
+  if (trackStore.resource) trackStore.setResource(undefined);
 };
 
 const showName = (resource: ResourceItem) => {

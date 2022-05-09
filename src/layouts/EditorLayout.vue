@@ -5,7 +5,6 @@ import Splitter from '@/components/Splitter.vue';
 import { useLocale } from '@/hooks/useLocale';
 
 import { CanvasId } from '@/settings/playerSetting';
-import { useResourceStore } from '@/store/resource';
 import { usePreviewStore } from '@/store/preview';
 import { useTrackStore } from '@/store/track';
 
@@ -52,12 +51,10 @@ const canvasSizeChange = () => {
   let h = Math.floor(previewH * 0.7);
   while (w / ratio > h) w *= 0.99;
 
-  const resizeProportion = w / previewCanvas.width;
   previewCanvas.width = w;
   previewCanvas.height = Math.floor(w / ratio);
 
-  useResourceStore().onPreviewCanvasSizeChange(resizeProportion);
-  if (useResourceStore().resource) previewStore.player.updateSize();
+  if (trackStore.resource) previewStore.player.updateSize();
   if (!trackStore.isMapEmpty()) return trackStore.manager.updateSize();
 };
 

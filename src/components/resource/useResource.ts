@@ -1,3 +1,5 @@
+import type { ResourceItem } from '@/logic/resource';
+
 import { TabsData } from './routes';
 import axios from 'axios';
 
@@ -54,8 +56,33 @@ export function useResource() {
     }
   };
 
+  const favoriteList = $computed(
+    () => currentLib.value.fragments.filter((v) => v.name === '收藏')[0].list
+  );
+  const currentFragment = $computed(() => currentLib.value.fragments[fragmentIdx.value]);
+  const addFavorite = (resource: ResourceItem) => {
+    if (!resource) return;
+    resource.checked = true;
+    favoriteList.push(resource);
+  };
+  const removeFavorite = (resource: ResourceItem) => {
+    const idx = favoriteList.indexOf(resource);
+    if (idx === -1) return;
+    favoriteList[idx].checked = false;
+    favoriteList.splice(idx, 1);
+  };
+  const download = (resource: ResourceItem) => {
+    resource.active = resource.usable = true;
+  };
+  const addResource = (resource: ResourceItem) => {
+    const idx = currentFragment.list.findIndex((v) => v.name === resource.name);
+    if (idx !== -1) currentFragment.list.splice(idx, 1);
+    currentFragment.list.unshift(resource);
+  };
+
   const tabStore = { tabs, tabIndex, currentTab, setTabIndex };
   const libStore = { libs, libIndex, currentLib, setLibIndex };
   const fragmentStore = { fragmentIdx, setFragmentIdx, updateFragments };
-  return { ...tabStore, ...libStore, ...fragmentStore };
+  const resourceStore = { addFavorite, removeFavorite, download, addResource };
+  return { ...tabStore, ...libStore, ...fragmentStore, ...resourceStore };
 }

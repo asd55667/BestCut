@@ -11,12 +11,14 @@ import {
   // StarOutlined,
 } from '@ant-design/icons-vue';
 
-import { useResourceStore } from '@/store/resource';
 import { usePreviewStore } from '@/store/preview';
 import { useTrackStore } from '@/store/track';
 
 import { CanvasId } from '@/settings/playerSetting';
 import _ from 'lodash-es';
+import { useResource } from './useResource';
+
+const { addFavorite, removeFavorite } = useResource();
 
 const props = defineProps({
   usable: {
@@ -49,16 +51,14 @@ const checked = ref(props.resource.checked);
 const usable = ref(props.usable);
 // const isMask = computed(() => Boolean(useAttrs().draggable));
 
-const resourceStore = useResourceStore();
 const previewStore = usePreviewStore();
 const ratio = computed(() => previewStore.ratio);
 
 const onChecked = () => {
   checked.value = !checked.value;
-  checked.value
-    ? resourceStore.addFavorite(props.resource)
-    : resourceStore.removeFavorite(props.resource);
+  checked.value ? addFavorite(props.resource) : removeFavorite(props.resource);
 };
+
 watch(
   () => props.resource.checked,
   () => {
@@ -83,7 +83,7 @@ const isLoading = ref(false);
 const resourceRef = ref<HTMLElement | null>(null);
 const play = (e: MouseEvent) => {
   const fn = (e: MouseEvent) => {
-    resourceStore.setResource(props.resource);
+    trackStore.setResource(props.resource);
     if (usable.value) {
       if (previewStore.player.active && previewStore.player.id === CanvasId) {
         if (!resourceRef.value) return;
@@ -106,11 +106,11 @@ const play = (e: MouseEvent) => {
         .then((res) => {
           console.log(res);
           usable.value = true;
-          resourceStore.download(props.resource);
+          // download(props.resource);
           play(e);
         })
         .catch((err) => {
-          resourceStore.setResource(undefined);
+          trackStore.setResource(undefined);
           console.log(err);
         })
         .then(() => {

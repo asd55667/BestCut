@@ -3,9 +3,10 @@ import { PlusCircleFilled } from '@ant-design/icons-vue';
 import { ResourceType } from '@/enums/resource';
 import { ResourceItem } from '@/logic/resource';
 import { stretchImg } from '@/utils/image';
-import { useResourceStore } from '@/store/resource';
 import { usePreviewStoreWithOut } from '@/store/preview';
+import { useResource } from './useResource';
 
+const { addResource } = useResource();
 const props = defineProps<{ empty: boolean; offline: boolean }>();
 
 const size = $computed(() => {
@@ -53,7 +54,7 @@ const loadLocalFile = () => {
     }
 
     const resource = new ResourceItem({ type, src, thumbnail, duration, name: file.name });
-    useResourceStore().addResource(resource);
+    addResource(resource);
   };
   input.click();
 };
