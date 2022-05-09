@@ -46,7 +46,6 @@
 
 <script lang="ts" setup>
 import { Layout } from 'ant-design-vue';
-import _ from 'lodash-es';
 
 import Splitter from '@/components/Splitter.vue';
 import { useLocale } from '@/hooks/useLocale';
@@ -107,13 +106,12 @@ const canvasSizeChange = () => {
   if (useResourceStore().resource) previewStore.player.updateSize();
   if (!trackStore.isMapEmpty()) return trackStore.manager.updateSize();
 };
-const canvasSizeChangeDebounce = _.debounce(canvasSizeChange, 10);
 
 const onResize = () => {
   const { innerWidth: w } = window;
   resourceW.value = w * resourceRatio.value;
   configW.value = w * configRatio.value;
-  canvasSizeChangeDebounce();
+  canvasSizeChange();
 };
 
 onMounted(() => {
@@ -134,7 +132,7 @@ const onWidthChangeLeft = (widthChange: any) => {
   const remain = w * (1 - previewRatio) - configW.value - 2 * splitterWidth.value;
   resourceW.value = remain > pre ? pre : remain;
   resourceRatio.value = resourceW.value / w;
-  canvasSizeChangeDebounce();
+  canvasSizeChange();
 };
 
 const onWidthChangeRight = (widthChange: any) => {
@@ -144,7 +142,7 @@ const onWidthChangeRight = (widthChange: any) => {
   const remain = w * (1 - previewRatio) - resourceW.value - 2 * splitterWidth.value;
   configW.value = remain > after ? after : remain;
   configRatio.value = configW.value / w;
-  canvasSizeChangeDebounce();
+  canvasSizeChange();
 };
 
 const onHeightChange = (heightChange: any) => {
@@ -155,7 +153,7 @@ const onHeightChange = (heightChange: any) => {
   ratio = Math.min(ratio, 60);
   trackRatio.value = ratio;
 
-  canvasSizeChangeDebounce();
+  canvasSizeChange();
 };
 
 const { t } = useI18n();

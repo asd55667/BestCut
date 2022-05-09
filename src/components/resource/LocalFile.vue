@@ -9,7 +9,7 @@ import { usePreviewStoreWithOut } from '@/store/preview';
 const props = defineProps<{ empty: boolean; offline: boolean }>();
 
 const size = $computed(() => {
-  let _size = 'h-20 w-36 m-2';
+  let _size = 'h-20 w-34 m-2';
   if (props.empty)
     if (props.offline) _size = 'h-28 w-54 p-8';
     else _size = 'h-22 w-full p-8';

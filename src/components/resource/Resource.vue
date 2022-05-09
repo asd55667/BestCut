@@ -1,6 +1,6 @@
 <template>
   <div class="resource-box-wrapper">
-    <div :class="['resource', size === '' ? 'h-20 w-36' : 'h-14 w-28']">
+    <div :class="['resource', size === '' ? 'h-20 w-34' : 'h-14 w-28']">
       <ResourceBox
         :resource="resource"
         :usable="usable"
