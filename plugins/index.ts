@@ -1,6 +1,6 @@
 import type { Plugin } from 'vite';
 
-import vue from '@vitejs/plugin-vue';
+import Vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import Unocss from 'unocss/vite';
 import Inspect from 'vite-plugin-inspect';
@@ -15,8 +15,11 @@ import { configComponentsPlugin } from './components';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const vitePlugins: (Plugin | Plugin[])[] = [
-    //
-    vue(),
+    Vue({
+      include: [/\.vue$/, /\.md$/],
+      reactivityTransform: true,
+    }),
+
     vueJsx(),
 
     Unocss(),

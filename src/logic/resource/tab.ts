@@ -7,7 +7,7 @@ export class ResourceLib {
   fragments: ResourceFragment[];
   constructor(
     public libName: string,
-    public component: (list: ResourceFragment[]) => JSX.Element,
+    // public component: (list: ResourceFragment[]) => JSX.Element,
     public offline = false,
     public update: number = -1
   ) {

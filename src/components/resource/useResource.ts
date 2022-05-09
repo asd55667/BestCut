@@ -5,7 +5,7 @@ import * as Resource from '@/logic/resource';
 import { ResourceType } from '@/enums/resource';
 
 const tabsData = ref(TabsData);
-const currentTabIndex = ref(1);
+const currentTabIndex = ref(0);
 const currentLibIndex = ref<number[]>(new Array(tabsData.value.length).fill(0));
 const currentFragmentIdx = ref(0);
 

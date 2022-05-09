@@ -88,8 +88,8 @@ const localLib = resourceMsg('/media/local', () => {
     lib: [
       {
         usable: true,
-        // list: [...video(2), ...audio(1), ...picture(1)],
-        list: [],
+        list: [...video(2), ...audio(1), ...picture(1)],
+        // list: [],
       },
     ],
     update: 0,
