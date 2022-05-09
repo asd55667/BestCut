@@ -10,7 +10,6 @@ declare module '@vue/runtime-core' {
     ConfigPanel: typeof import('./components/config-panel/ConfigPanel.vue')['default'];
     EditorLayout: typeof import('./layouts/EditorLayout.vue')['default'];
     LocalFile: typeof import('./components/resource/LocalFile.vue')['default'];
-    LocalResource: typeof import('./components/resource/LocalResource.vue')['default'];
     Preview: typeof import('./components/preview/Preview.vue')['default'];
     Resource: typeof import('./components/resource/Resource.vue')['default'];
     ResourceBox: typeof import('./components/resource/ResourceBox.vue')['default'];
