@@ -15,6 +15,7 @@ export function configAutoImportPlugin(): Plugin {
       'vue-router',
       'vue-i18n',
       'vue/macros',
+      '@vueuse/core',
       // '@vueuse/head',
     ],
     eslintrc: {
