@@ -5,7 +5,6 @@ import '@vue/runtime-core';
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AButton: typeof import('ant-design-vue/es')['Button'];
     CollapsedMenu: typeof import('./components/resource/CollapsedMenu.vue')['default'];
     ConfigPanel: typeof import('./components/config-panel/ConfigPanel.vue')['default'];
     EditorLayout: typeof import('./layouts/EditorLayout.vue')['default'];

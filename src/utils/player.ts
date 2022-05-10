@@ -1,6 +1,5 @@
 import { Duration0 } from '@/settings/playerSetting';
 
-const canvas = document.createElement('canvas');
 class Writer {
   data: Uint8Array;
   idx: number;
@@ -142,6 +141,7 @@ export function ms2fs(tp: number, fps: number) {
 
 export function videoFrame2Url(frame: VideoFrame) {
   const { codedWidth, codedHeight } = frame;
+  const canvas = document.createElement('canvas');
   canvas.width = codedWidth;
   canvas.height = codedHeight;
   const ctx = canvas.getContext('2d');

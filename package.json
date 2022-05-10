@@ -14,8 +14,7 @@
     "build:test": "vite build --mode test",
     "build:no-cache": "pnpm clean:cache && pnpm build",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
-    "test:unit": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "test:unit": "vitest",
     "bootstrap": "pnpm install",
     "preinstall": "npx only-allow pnpm",
     "reinstall": "rimraf pnpm-lock.yaml && rimraf node_modules && pnpm bootstrap"
@@ -107,6 +106,7 @@
     "vite-plugin-inspect": "^0.4.3",
     "vite-plugin-mock": "^2.9.6",
     "vite-plugin-pages": "^0.22.0",
+    "vitest": "^0.12.3",
     "vue-eslint-parser": "^7.8.0",
     "vue-tsc": "^0.2.2"
   }
