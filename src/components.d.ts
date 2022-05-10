@@ -5,6 +5,7 @@ import '@vue/runtime-core';
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AButton: typeof import('ant-design-vue/es')['Button'];
     CollapsedMenu: typeof import('./components/resource/CollapsedMenu.vue')['default'];
     ConfigPanel: typeof import('./components/config-panel/ConfigPanel.vue')['default'];
     EditorLayout: typeof import('./layouts/EditorLayout.vue')['default'];
@@ -12,6 +13,7 @@ declare module '@vue/runtime-core' {
     Preview: typeof import('./components/preview/Preview.vue')['default'];
     Resource: typeof import('./components/resource/Resource.vue')['default'];
     ResourceBox: typeof import('./components/resource/ResourceBox.vue')['default'];
+    ResourceFragment: typeof import('./components/resource/ResourceFragment.vue')['default'];
     ResourceList: typeof import('./components/resource/ResourceList.vue')['default'];
     ResourceSection: typeof import('./components/resource/ResourceSection.vue')['default'];
     ResourceSectionHead: typeof import('./components/resource/ResourceSectionHead.vue')['default'];

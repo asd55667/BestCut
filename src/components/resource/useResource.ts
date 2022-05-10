@@ -1,6 +1,6 @@
 import type { ResourceItem } from '@/logic/resource';
 
-import { TabsData } from './routes';
+import { TabsData } from './data';
 import axios from 'axios';
 
 import * as Resource from '@/logic/resource';
@@ -30,6 +30,7 @@ export function useResource() {
   const libIndex = computed(() => currentLibIndex.value[currentTabIndex.value]);
   const currentLib = computed(() => libs.value[libIndex.value]);
   const fragmentIdx = computed(() => currentFragmentIdx.value);
+  const currentFragment = $computed(() => currentLib.value.fragments[fragmentIdx.value]);
 
   const setTabIndex = (index: number) => (currentTabIndex.value = index);
   const setLibIndex = (index: number) => (currentLibIndex.value[currentTabIndex.value] = index);
@@ -59,7 +60,7 @@ export function useResource() {
   const favoriteList = $computed(
     () => currentLib.value.fragments.filter((v) => v.name === '收藏')[0].list
   );
-  const currentFragment = $computed(() => currentLib.value.fragments[fragmentIdx.value]);
+
   const addFavorite = (resource: ResourceItem) => {
     if (!resource) return;
     resource.checked = true;
