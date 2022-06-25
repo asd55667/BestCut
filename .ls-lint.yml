@@ -1,0 +1,30 @@
+ls:
+  /*:
+    .js: kebab-case | camelCase
+    .d.ts: kebab-case
+    .mock.ts: kebab-case
+    .less: kebab-case
+    .css: kebab-case
+    .spec.ts: kebab-case
+  src/settings:
+    .ts: regex:\w+Setting | regex:^index
+  src/hooks:
+    .ts: regex:^use(\w+)
+  src/utils:
+    .ts: kebab-case
+  src/components:
+    .vue: PascalCase
+  src/pages/:
+    .vue: kebab-case | regex:^\[.*\] | regex:^index
+
+  mocks/*:
+    .ts: kebab-case | regex:^_\w+
+
+ignore:
+  - node_modules
+  - .git
+  - .circleci
+  - .github
+  - .vscode
+  - dist
+  - .local

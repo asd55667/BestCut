@@ -7,6 +7,7 @@
     "lint:eslint": "eslint --cache --max-warnings 0 \"{src,plugins,mocks,tests}/**/*.{vue,js,ts,tsx}\" --fix",
     "lint:format": "prettier --write --loglevel warn \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
+    "lint:ls-lint": "ls-lint",
     "lint:lint-staged": "lint-staged",
     "clean:lib": "rimraf node_modules",
     "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@intlify/vite-plugin-vue-i18n": "^3.4.0",
+    "@ls-lint/ls-lint": "^1.11.2",
     "@types/lodash-es": "^4.17.6",
     "@types/mockjs": "^1.0.6",
     "@types/node": "^16.11.41",
@@ -55,6 +57,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^3.4.1",
+    "less": "^4.1.3",
     "lint-staged": "^12.5.0",
     "prettier": "~2.6.2",
     "rimraf": "^3.0.2",
@@ -82,6 +85,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
+      "ls-lint",
       "eslint --fix",
       "prettier --write"
     ],
@@ -92,6 +96,7 @@
       "prettier --write"
     ],
     "*.vue": [
+      "ls-lint",
       "eslint --fix",
       "prettier --write",
       "stylelint --fix"
