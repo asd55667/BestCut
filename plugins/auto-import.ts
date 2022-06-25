@@ -4,6 +4,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 
 export function configAutoImportPlugin(): Plugin {
   return AutoImport({
+    dirs: ['src/composables'],
     include: [
       /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
       /\.vue$/,
@@ -22,6 +23,6 @@ export function configAutoImportPlugin(): Plugin {
       enabled: true,
     },
     exclude: [/dist/],
-    dts: 'src/auto-imports.d.ts',
+    dts: 'typings/auto-imports.d.ts',
   });
 }

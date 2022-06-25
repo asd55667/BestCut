@@ -5,7 +5,7 @@ export function configComponentsPlugin() {
   return Components({
     dirs: ['src/components', 'src/layouts'],
     extensions: ['vue', 'md'],
-    dts: 'src/components.d.ts',
+    dts: 'typings/components.d.ts',
     resolvers: [AntDesignVueResolver()],
     types: [
       {
