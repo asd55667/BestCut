@@ -1,0 +1,15 @@
+{
+  "name": "@chiulipine/editor",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@chiulipine/const": "workspace:*",
+    "@chiulipine/resource": "workspace:*",
+    "@chiulipine/components": "workspace:*",
+    "@chiulipine/track": "workspace:*"
+  }
+}

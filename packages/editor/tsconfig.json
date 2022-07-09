@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "#/*": ["typings/*"]
+    },
+    "types": [
+      "vite/client"
+      //
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "typings/**/*.ts",
+    "build/**/*.ts",
+    "mocks/**/*.ts",
+    "tests/**/*.ts",
+    "vite.config.ts"
+  ]
+}

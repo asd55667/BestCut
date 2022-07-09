@@ -1,18 +1,13 @@
+import axios from 'axios';
 import { toRaw } from 'vue';
+import * as THREE from 'three';
 import { v4 as uuid } from 'uuid';
+import GLTransitions from 'gl-transitions';
 import { FireFilled, FilterOutlined } from '@ant-design/icons-vue';
 
-import { ResourceType } from '@chiulipine/const';
-import * as THREE from 'three';
-
-import axios from 'axios';
-import GLTransitions from 'gl-transitions';
-
-import { Base } from '@chiulipine/const';
-import { MP4Source } from '@/logic/mp4';
-import { Renderer, AttachmentParams } from '@/logic/renderer';
-
-import { videoFrame2Url } from '@/utils/player';
+import { videoFrame2Url } from '@chiulipine/utils';
+import { ResourceType, Base } from '@chiulipine/const';
+import type { MP4Source, Renderer, AttachmentParams } from '@chiulipine/player';
 
 type ItemOptional = {
   id: string;
@@ -325,6 +320,17 @@ export type TrackMap = {
   video: Track[][];
   main: VideoTrack[];
   audio: AudioTrack[][];
+};
+
+export const TrackCtorMap = {
+  [ResourceType.Video]: VideoTrack,
+  [ResourceType.Audio]: AudioTrack,
+  [ResourceType.Picture]: VideoTrack,
+  [ResourceType.Sticker]: StickerTrack,
+  [ResourceType.Text]: TextTrack,
+  [ResourceType.Effect]: EffectTrack,
+  [ResourceType.Filter]: FilterTrack,
+  [ResourceType.Transition]: TransitionTrack,
 };
 
 export function isMedia(type: ResourceType) {

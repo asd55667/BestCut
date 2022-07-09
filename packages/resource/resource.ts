@@ -1,6 +1,6 @@
 import { ResourceType, TrackCtorMap, Base } from '@chiulipine/const';
 
-import { VideoTrack, TrackOption } from '../track/track';
+import { VideoTrack, TrackOption } from '@chiulipine/track';
 
 type ItemOptional = {
   id: string;

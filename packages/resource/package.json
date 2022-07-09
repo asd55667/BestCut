@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "dependencies": {
-    "@chiulipine/const": "workspace:*"
+    "@chiulipine/const": "workspace:*",
+    "@chiulipine/track": "workspace:*"
   }
 }
