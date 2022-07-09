@@ -1,34 +1,30 @@
 <template>
   <div class="resource-box-wrapper">
     <div :class="['resource', size === '' ? 'h-20 w-34' : 'h-14 w-28']">
-      <ResourceBox
-        :resource="resource"
-        :usable="usable"
+      <!-- :usable="usable"
         :favorite="favorite"
-        :offline="offline"
-        :show-add="showAdd"
-        @pointermove="onResourceMove"
-      />
+        :show-add="showAdd" -->
+      <ResourceBox :resource="resource" :offline="offline" @pointermove="onResourceMove" />
 
       <div class="resource-box-mask" absolute top-0 left-0 w-fulll h-full v-show="maskVisible">
+        <!-- :usable="usable"
+          :favorite="favorite"
+          :show-add="showAdd" -->
         <ResourceBox
           ref="maskRef"
           draggable="true"
           :resource="resource"
-          :usable="usable"
-          :favorite="favorite"
           :offline="offline"
-          :show-add="showAdd"
           @pointerleave="onResourceLeave"
           @dragstart="onDragStart"
           @dragend="onDragEnd"
-          v-click-outside:[exclude]="resource.active ? onClickOutside : () => {}"
+          v-click-outside:[exclude]="onClickOutside"
         />
         <Track class="resource-drag-view" hidden ref="trackRef" :track="track" />
       </div>
     </div>
 
-    <div v-if="showName(resource) && resource.name" text="#838383 left xs" ml-2 mt-1 h-4>
+    <div v-if="resource.name && nameVisible" text="#838383 left xs" ml-2 mt-1 h-4>
       {{ resource.name }}
     </div>
   </div>
@@ -56,18 +52,6 @@ type DragView = {
 };
 
 const props = defineProps({
-  usable: {
-    type: Boolean,
-    default: false,
-  },
-  showAdd: {
-    type: Boolean,
-    default: false,
-  },
-  favorite: {
-    type: Boolean,
-    default: false,
-  },
   referenced: {
     type: Boolean,
     default: false,
@@ -86,21 +70,13 @@ const props = defineProps({
   },
 });
 
-const checked = ref(props.resource.checked);
-watch(
-  () => props.resource.checked,
-  () => {
-    checked.value = props.resource.checked;
-  }
-);
-
 const trackStore = useTrackStore();
 const previewStore = usePreviewStore();
 watch(
   () => trackStore.isResourceOver,
   (val: boolean) => {
     if (!trackRef.value || !maskView || !dragView.el) return;
-    if (!props.usable) {
+    if (!props.resource.usable) {
       trackStore.setArea(ContainerType.OutSide);
       return;
     }
@@ -131,6 +107,13 @@ const track = computed(() => {
   const trak = props.resource.toTrack();
   if (trackStore.calcWidth) trak.width = trackStore.calcWidth(trak);
   return trak;
+});
+const resource = $computed(() => props.resource);
+const nameVisible = $computed(() => {
+  const b1 = resource instanceof TextResource;
+  const b2 = resource instanceof AudioResource;
+  const b3 = resource instanceof StickerResource;
+  return (!b1 && !b2 && !b3) || props.offline;
 });
 
 let maskView: HTMLElement | undefined;
@@ -228,13 +211,6 @@ onBeforeMount(() => {
 const onClickOutside = () => {
   if (props.resource.active) previewStore.player.stop();
   if (trackStore.resource) trackStore.setResource(undefined);
-};
-
-const showName = (resource: ResourceItem) => {
-  const b1 = resource instanceof TextResource;
-  const b2 = resource instanceof AudioResource;
-  const b3 = resource instanceof StickerResource;
-  return (!b1 && !b2 && !b3) || props.offline;
 };
 </script>
 

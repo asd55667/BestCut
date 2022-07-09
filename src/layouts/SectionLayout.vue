@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { Layout } from 'ant-design-vue';
 
 import { isString } from '@/utils/is';
 
@@ -21,44 +20,44 @@ defineProps({
 </script>
 
 <template>
-  <Layout class="function-area-box" text-white h-full>
-    <Layout.Header rounded-t-md flex items-center p-0 border-b border-black>
+  <ALayout class="function-area-box" text-white h-full>
+    <ALayoutHeader rounded-t-md flex items-center p-0 border-b border-black>
       <slot name="header">
         <div h-full ml-3 select-none capitalize>
           <div flex items-center h-full v-if="isString(title)"> {{ title }}</div>
           <component flex items-center v-else :is="title" />
         </div>
       </slot>
-    </Layout.Header>
+    </ALayoutHeader>
 
-    <Layout rounded-b-md overflow-hidden>
-      <Layout.Sider v-if="sider" :class="sider.class" :width="sider.width">
+    <ALayout rounded-b-md overflow-hidden>
+      <ALayoutSider v-if="sider" :class="sider.class" :width="sider.width">
         <slot name="sider">
           <div center>
             {{ 'sider' }}
           </div>
         </slot>
-      </Layout.Sider>
+      </ALayoutSider>
 
-      <Layout>
-        <Layout.Content h="5/6" overflow-auto>
+      <ALayout>
+        <ALayoutContent h="5/6" overflow-auto>
           <slot name="content">
             <div center>
               {{ 'content' }}
             </div>
           </slot>
-        </Layout.Content>
+        </ALayoutContent>
 
-        <Layout.Footer v-if="footer" h="1/6">
+        <ALayoutFooter v-if="footer" h="1/6">
           <slot name="footer">
             <div center>
               {{ 'footer' }}
             </div>
           </slot>
-        </Layout.Footer>
-      </Layout>
-    </Layout>
-  </Layout>
+        </ALayoutFooter>
+      </ALayout>
+    </ALayout>
+  </ALayout>
 </template>
 
 <style scoped lang="less">

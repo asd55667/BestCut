@@ -1,7 +1,7 @@
 import type { Plugin } from 'vite';
 
 import Vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
+import VueJsx from '@vitejs/plugin-vue-jsx';
 import Unocss from 'unocss/vite';
 import Inspect from 'vite-plugin-inspect';
 
@@ -20,7 +20,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
       reactivityTransform: true,
     }),
 
-    vueJsx(),
+    VueJsx(),
 
     Unocss(),
   ];

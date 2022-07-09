@@ -1,7 +1,6 @@
-import { Base } from '@/logic/data';
-import { ResourceType } from '@/enums/resource';
+import { ResourceType, TrackCtorMap, Base } from '@chiulipine/const';
 
-import * as Track from '@/logic/tracks';
+import { VideoTrack, TrackOption } from '../track/track';
 
 type ItemOptional = {
   id: string;
@@ -25,18 +24,7 @@ type ItemRequired = {
 
 type ResourceOption = Partial<ItemOptional> & ItemRequired;
 
-const TrackCtorMap = {
-  [ResourceType.Video]: Track.VideoTrack,
-  [ResourceType.Audio]: Track.AudioTrack,
-  [ResourceType.Picture]: Track.VideoTrack,
-  [ResourceType.Sticker]: Track.StickerTrack,
-  [ResourceType.Text]: Track.TextTrack,
-  [ResourceType.Effect]: Track.EffectTrack,
-  [ResourceType.Filter]: Track.FilterTrack,
-  [ResourceType.Transition]: Track.TransitionTrack,
-};
-
-export class ResourceItem extends Base {
+export class Resource extends Base {
   src: string;
   type: ResourceType;
   duration: string;
@@ -68,18 +56,18 @@ export class ResourceItem extends Base {
   }
 }
 
-export class VideoResource extends ResourceItem {
+export class VideoResource extends Resource {
   constructor(options: Omit<ResourceOption, 'type'>) {
     const _opts = { type: ResourceType.Video };
     super(Object.assign(_opts, options));
   }
   toTrack() {
-    return new Track.VideoTrack(this as Track.TrackOption);
+    return new VideoTrack(this as TrackOption);
   }
 }
 
 type AudioOption = Omit<ResourceOption, 'type'> & { album?: string; author?: string };
-export class AudioResource extends ResourceItem {
+export class AudioResource extends Resource {
   album: string;
   author: string;
   constructor(options: AudioOption) {
@@ -90,17 +78,17 @@ export class AudioResource extends ResourceItem {
   }
 }
 
-export class PictureResource extends ResourceItem {
+export class PictureResource extends Resource {
   constructor(options: Omit<ResourceOption, 'type'>) {
     const _opts = { type: ResourceType.Picture };
     super(Object.assign(_opts, options));
   }
   toTrack() {
-    return new Track.VideoTrack(this as Track.TrackOption);
+    return new VideoTrack(this as TrackOption);
   }
 }
 
-export class StickerResource extends ResourceItem {
+export class StickerResource extends Resource {
   constructor(options: Omit<ResourceOption, 'type'>) {
     const _opts = { type: ResourceType.Sticker };
     super(Object.assign(_opts, options));
@@ -109,28 +97,28 @@ export class StickerResource extends ResourceItem {
 
 type AttachmentOption = Omit<ResourceOption, 'type' | 'duration'>;
 
-export class FilterResource extends ResourceItem {
+export class FilterResource extends Resource {
   constructor(options: AttachmentOption) {
     const _opts = { type: ResourceType.Filter, duration: '00:03' };
     super(Object.assign(_opts, options));
   }
 }
 
-export class EffectResource extends ResourceItem {
+export class EffectResource extends Resource {
   constructor(options: AttachmentOption) {
     const _opts = { type: ResourceType.Effect, duration: '00:03' };
     super(Object.assign(_opts, options));
   }
 }
 
-export class TextResource extends ResourceItem {
+export class TextResource extends Resource {
   constructor(options: AttachmentOption) {
     const _opts = { type: ResourceType.Text, duration: '03:03' };
     super(Object.assign(_opts, options));
   }
 }
 
-export class TransitionResource extends ResourceItem {
+export class TransitionResource extends Resource {
   constructor(options: AttachmentOption) {
     const _opts = { type: ResourceType.Transition, duration: '00:01' };
     super(Object.assign(_opts, options));
@@ -142,5 +130,5 @@ export interface ResourceFragment {
   usable?: boolean;
   favorite?: boolean;
   showAdd?: boolean;
-  list: ResourceItem[];
+  list: Resource[];
 }

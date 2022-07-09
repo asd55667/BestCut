@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-import { useResource } from './useResource';
-
-const { currentLib, fragmentIdx, setFragmentIdx } = useResource();
+import { setTabIndex, setFragmentIdx } from './useResource';
+import { tabs, tabIndex, fragmentIdx, currentLib } from './useResource';
 
 const { t } = useI18n();
 const title = t('components.resource');
 
 const fragments = computed(() => currentLib.value.fragments);
+
+const isTabActive = (i: number) => tabIndex.value === i;
 
 let stepArr: number[][] = [];
 const switchFragment = (e: WheelEvent) => {
@@ -36,7 +37,19 @@ const switchFragment = (e: WheelEvent) => {
 
 <template>
   <SectionLayout :sider="{ width: 90, class: 'border-r border-black' }" :title="title">
-    <template #header> <ResourceSectionHead /> </template>
+    <template #header>
+      <div class="tabs flex items-center pt-1 px-1 w-full">
+        <div
+          v-for="(tab, idx) in tabs"
+          :key="idx"
+          :class="[isTabActive(idx) ? 'text-[aqua]' : '', 'flex flex-col items-center mx-1 w-10']"
+          @click="() => setTabIndex(idx)"
+        >
+          <div :i="tab.icon" />
+          <span class="text-xs mt-1"> {{ tab.name }} </span>
+        </div>
+      </div>
+    </template>
 
     <template #sider> <CollapsedMenu /> </template>
 

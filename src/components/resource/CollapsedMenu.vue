@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { Collapse, CollapsePanel } from 'ant-design-vue';
 import { CaretRightOutlined, CaretDownOutlined } from '@ant-design/icons-vue';
-import { useResource } from './useResource';
-const { libs, libIndex, tabIndex, fragmentIdx, setLibIndex, setFragmentIdx, updateFragments } =
-  useResource();
+import { libs, libIndex, tabIndex, fragmentIdx } from './useResource';
+import { setLibIndex, setFragmentIdx, updateFragments } from './useResource';
 
 const { t } = useI18n();
 
@@ -36,14 +34,14 @@ updateFragments();
 </script>
 
 <template>
-  <Collapse
+  <ACollapse
     class="overflow-y-scroll h-full"
     :bordered="false"
     accordion
     :expandIcon="icon"
     v-model:activeKey="activeLib"
   >
-    <CollapsePanel
+    <ACollapsePanel
       v-for="(resource, i) of libs"
       :key="i"
       :class="[libIndex === i ? 'text-[aqua]' : 'text-white', 'my-2']"
@@ -60,8 +58,8 @@ updateFragments();
           {{ fragment.name }}
         </div>
       </div>
-    </CollapsePanel>
-  </Collapse>
+    </ACollapsePanel>
+  </ACollapse>
 </template>
 
 <style scoped lang="less">

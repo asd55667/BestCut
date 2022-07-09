@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import type { ResourceFragment } from '@/logic/resource';
 
-import { useResource } from './useResource';
-
-const { currentLib } = useResource();
+import { currentLib } from './useResource';
 
 const props = defineProps<{ fragment: ResourceFragment }>();
 
@@ -25,10 +23,10 @@ const isEmpty = $computed(() => !props.fragment.list.length);
           class="local-resource-list relative m-2 text-xs"
           :offline="offline"
           :resource="resource"
-          :usable="resource.usable || fragment.usable"
-          :favorite="resource.favorite || fragment.favorite"
-          :showAdd="resource.showAdd || fragment.showAdd"
         />
+        <!-- :usable="resource.usable || fragment.usable"
+          :favorite="resource.favorite || fragment.favorite"
+          :showAdd="resource.showAdd || fragment.showAdd" -->
         <!-- onEvent={offline ? () => {} : () => {}} // TODO: 添加离线资源 -->
       </div>
     </div>

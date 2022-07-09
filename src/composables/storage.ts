@@ -1,9 +1,9 @@
 // @ts-ignore
 import type { RemovableRef } from '@vueuse/core';
-import type { ResourceItem } from '@/logic/resource';
+import type { ResourceFragment } from '@/logic/resource';
 
 type LocalMedia = {
-  [key: string]: ResourceItem;
+  [key: string]: ResourceFragment[];
 };
 
 export const localMedia = useStorage<LocalMedia>('local-media', {});

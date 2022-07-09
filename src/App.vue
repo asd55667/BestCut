@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ConfigProvider } from 'ant-design-vue';
 import { useLocale } from '@/hooks/useLocale';
 import { useTitle } from '@/hooks/useTitle';
 
@@ -9,7 +8,7 @@ const { getAntdLocale } = useLocale();
 </script>
 
 <template>
-  <ConfigProvider :locale="getAntdLocale">
+  <AConfigProvider :locale="getAntdLocale">
     <RouterView />
-  </ConfigProvider>
+  </AConfigProvider>
 </template>

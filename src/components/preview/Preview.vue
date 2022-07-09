@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons-vue';
 import { Slider } from 'ant-design-vue';
 
-import SectionLayout from '@/layouts/SectionBox.vue';
+import SectionLayout from '@/layouts/SectionLayout.vue';
 import { useFullScreen } from '@/hooks/useFullScreen';
 
 import { usePreviewStore } from '@/store/preview';

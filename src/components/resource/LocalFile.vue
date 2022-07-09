@@ -4,9 +4,8 @@ import { ResourceType } from '@/enums/resource';
 import { ResourceItem } from '@/logic/resource';
 import { stretchImg } from '@/utils/image';
 import { usePreviewStoreWithOut } from '@/store/preview';
-import { useResource } from './useResource';
+import { addResource } from './useResource';
 
-const { addResource } = useResource();
 const props = defineProps<{ empty: boolean; offline: boolean }>();
 
 const size = $computed(() => {

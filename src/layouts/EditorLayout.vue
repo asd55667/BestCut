@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Layout } from 'ant-design-vue';
-
 import Splitter from '@/components/Splitter.vue';
 import { useLocale } from '@/hooks/useLocale';
 
@@ -127,49 +125,49 @@ const switchLang = async () => {
 </script>
 
 <template>
-  <Layout>
-    <Layout.Header>
+  <ALayout>
+    <ALayoutHeader>
       <slot name="header">
         <div center h-full>
-          {{ t('common.header') }}
+          {{ t('commonheader') }}
           <a-button @click="switchLang" absolute right-36>
             {{ getLocaleText }}
           </a-button>
         </div>
       </slot>
-    </Layout.Header>
+    </ALayoutHeader>
 
-    <Layout class="layout-content" :style="`height: ${95 - trackRatio}vh;`" bg-black px-2>
-      <Layout.Sider :width="resourceW">
+    <ALayout class="layout-content" :style="`height: ${95 - trackRatio}vh;`" bg-black px-2>
+      <ALayoutSider :width="resourceW">
         <slot name="resource">
           <div center bg-blue-500 rounded-md>{{ t('common.resource') }}</div>
         </slot>
-      </Layout.Sider>
+      </ALayoutSider>
 
       <Splitter class="splitter" vertical :value="splitterWidth" @width="onWidthChangeLeft" />
 
-      <Layout.Content class="bg-black">
+      <ALayoutContent class="bg-black">
         <slot name="preview">
           <div center rounded-md bg-green-500>{{ t('common.preview') }}</div>
         </slot>
-      </Layout.Content>
+      </ALayoutContent>
 
       <Splitter class="splitter" vertical :value="splitterWidth" @width="onWidthChangeRight" />
-      <Layout.Sider :width="configW">
+      <ALayoutSider :width="configW">
         <slot name="config">
           <div center rounded-md bg-red-500>{{ t('common.config') }}</div>
         </slot>
-      </Layout.Sider>
-    </Layout>
+      </ALayoutSider>
+    </ALayout>
 
     <Splitter class="splitter" :value="splitterHeight" @height="onHeightChange" />
 
-    <Layout.Footer bg-black :style="`height: calc(${trackRatio}vh - ${splitterHeight}px)`">
+    <ALayoutFooter bg-black :style="`height: calc(${trackRatio}vh - ${splitterHeight}px)`">
       <slot name="track">
         <div center rounded-md bg-purple-500>{{ t('common.track') }}</div>
       </slot>
-    </Layout.Footer>
-  </Layout>
+    </ALayoutFooter>
+  </ALayout>
 </template>
 
 <style lang="less" scoped>

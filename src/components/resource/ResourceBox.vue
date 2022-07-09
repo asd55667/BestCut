@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ResourceItem, AudioResource, VideoResource, PictureResource } from '@/logic/resource';
+import { ResourceItem } from '@/logic/resource';
+import { isVideo, isPicture, isAudio } from '@/utils/resource';
 
 import type { PropType } from 'vue';
 import {
@@ -10,29 +11,28 @@ import {
   StarFilled,
   // StarOutlined,
 } from '@ant-design/icons-vue';
+import _ from 'lodash-es';
 
 import { usePreviewStore } from '@/store/preview';
 import { useTrackStore } from '@/store/track';
 
 import { CanvasId } from '@/settings/playerSetting';
-import _ from 'lodash-es';
-import { useResource } from './useResource';
+import { addFavorite, removeFavorite } from './useResource';
 
-const { addFavorite, removeFavorite } = useResource();
-
+// const emit = defineEmits(['checked', 'usable']);
 const props = defineProps({
-  usable: {
-    type: Boolean,
-    default: false,
-  },
-  showAdd: {
-    type: Boolean,
-    default: false,
-  },
-  favorite: {
-    type: Boolean,
-    default: false,
-  },
+  // usable: {
+  //   type: Boolean,
+  //   default: false,
+  // },
+  // showAdd: {
+  //   type: Boolean,
+  //   default: false,
+  // },
+  // favorite: {
+  //   type: Boolean,
+  //   default: false,
+  // },
   referenced: {
     type: Boolean,
     default: false,
@@ -47,30 +47,30 @@ const props = defineProps({
   },
 });
 
-const checked = ref(props.resource.checked);
-const usable = ref(props.usable);
+const checked = $computed(() => props.resource.checked);
+const usable = $computed(() => props.resource.usable);
 // const isMask = computed(() => Boolean(useAttrs().draggable));
 
 const previewStore = usePreviewStore();
 const ratio = computed(() => previewStore.ratio);
 
 const onChecked = () => {
-  checked.value = !checked.value;
-  checked.value ? addFavorite(props.resource) : removeFavorite(props.resource);
+  // checked.value = !checked.value;
+  checked ? addFavorite(props.resource) : removeFavorite(props.resource);
 };
 
-watch(
-  () => props.resource.checked,
-  () => {
-    checked.value = props.resource.checked;
-  }
-);
-watch(
-  () => props.resource.usable,
-  () => {
-    usable.value = props.resource.usable;
-  }
-);
+// watch(
+//   () => props.resource.checked,
+//   () => {
+//     checked.value = props.resource.checked;
+//   }
+// );
+// watch(
+//   () => props.resource.usable,
+//   () => {
+//     usable.value = props.resource.usable;
+//   }
+// );
 
 const trackStore = useTrackStore();
 const add2Track = () => {
@@ -84,7 +84,8 @@ const resourceRef = ref<HTMLElement | null>(null);
 const play = (e: MouseEvent) => {
   const fn = (e: MouseEvent) => {
     trackStore.setResource(props.resource);
-    if (usable.value) {
+    // if (usable.value) {
+    if (usable) {
       if (previewStore.player.active && previewStore.player.id === CanvasId) {
         if (!resourceRef.value) return;
         const left = resourceRef.value?.getBoundingClientRect().left || 0;
@@ -105,7 +106,7 @@ const play = (e: MouseEvent) => {
       download
         .then((res) => {
           console.log(res);
-          usable.value = true;
+          // usable.value = true;
           // download(props.resource);
           play(e);
         })
@@ -121,13 +122,7 @@ const play = (e: MouseEvent) => {
   _.debounce(fn, 300)(e);
 };
 
-const isOver = ref(false);
-const onPointerOver = () => {
-  isOver.value = true;
-};
-const onPointerLeave = () => {
-  isOver.value = false;
-};
+let isOver = $ref(false);
 </script>
 
 <template>
@@ -144,10 +139,10 @@ const onPointerLeave = () => {
       v-if="resource.active"
       class="timeline-locator absolute rounded-md h-full w-px bg-yellow-500 top-0 z-10"
       :style="{ left: `${ratio}%` }"
-    ></div>
+    />
 
     <div class="resource-content overflow-hidden absolute h-full w-full">
-      <div v-if="resource instanceof AudioResource" class="h-full flex items-center">
+      <div v-if="isAudio(resource)" class="h-full flex items-center">
         <img class="rounded-md h-5/6 w-2/5 ml-2 mr-1" draggable="false" :src="resource.thumbnail" />
 
         <div class="text-xs flex flex-col justify-between h-5/6">
@@ -164,13 +159,13 @@ const onPointerLeave = () => {
       <div
         v-else
         class="h-full w-full rounded-md"
-        @pointerover="onPointerOver"
-        @pointerleave="onPointerLeave"
+        @pointerover="isOver = true"
+        @pointerleave="isOver = false"
       >
         <img
           class="h-full w-full"
           draggable="false"
-          :src="isOver && !(resource instanceof VideoResource) ? resource.src : resource.thumbnail"
+          :src="isOver && !isVideo(resource) ? resource.src : resource.thumbnail"
         />
       </div>
     </div>
@@ -181,27 +176,22 @@ const onPointerLeave = () => {
     </div>
 
     <div class="absolute top-1 right-1">
-      <FileImageOutlined v-if="resource instanceof PictureResource" />
-      <div
-        v-if="
-          resource instanceof VideoResource ||
-          (resource instanceof AudioResource && !resource.album && !resource.author)
-        "
-      >
+      <FileImageOutlined v-if="isPicture(resource)" />
+      <div v-if="isVideo(resource) || (isAudio(resource) && !resource.album && !resource.author)">
         {{ resource.duration }}
       </div>
     </div>
 
     <!-- br icons  -->
     <StarFilled
-      v-if="favorite"
+      v-if="resource.favorite"
       :class="[resource.checked ? 'text-yellow-400' : '', 'favorite absolute bottom-1 right-5']"
       @click.stop="onChecked"
     />
 
     <PlusCircleFilled
       v-if="usable"
-      :class="[showAdd ? '' : 'hidden', 'absolute bottom-1 right-1']"
+      :class="[resource.showAdd ? '' : 'hidden', 'absolute bottom-1 right-1']"
       group-hover="text-[aqua] block"
       @click.stop="add2Track"
     />

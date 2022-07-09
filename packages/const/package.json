@@ -1,0 +1,9 @@
+{
+  "name": "@chiulipine/const",
+  "version": "0.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@chiulipine/resource": "workspace:*",
+    "@chiulipine/track": "workspace:*"
+  }
+}
