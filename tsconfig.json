@@ -8,7 +8,7 @@
     "jsx": "preserve",
     "declaration": true,
     // "outFile": "./out.js",
-    "outDir": "./dist",
+    // "outDir": "/dist",
     "rootDir": ".",
     // "removeComments": false,
     // "noEmit": true,

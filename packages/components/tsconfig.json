@@ -1,7 +1,13 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "."
   },
-  "include": ["**/*.ts", "**/*.vue", "**/*.tsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.vue",
+    "**/*.tsx",
+    "../.vitepress/**/*.ts"
+    //
+  ]
 }

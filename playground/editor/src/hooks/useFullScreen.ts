@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
 
-import { usePreviewStore } from './../store/preview';
+import { usePreviewStore } from '../store/preview';
 import { CanvasId, PlayerId } from '@/settings/playerSetting';
 
 export const useFullScreen = (isInFullScreen: Ref<boolean>, panelVisible: Ref<boolean>) => {

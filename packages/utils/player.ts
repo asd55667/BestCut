@@ -1,4 +1,4 @@
-import { Duration0 } from '@/settings/playerSetting';
+const Duration0 = '00:00:00:00';
 
 class Writer {
   data: Uint8Array;

@@ -28,7 +28,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:prettier/recommended',
     'plugin:@typescript-eslint/recommended',
-    './packages/editor/.eslintrc-auto-import.json',
+    '.eslintrc-auto-import.json',
   ],
   rules: {
     semi: ['error', 'always'],

@@ -1,4 +1,4 @@
-import { logger, LogFlag } from './../../utils/log';
+import { logger, LogFlag } from '../../utils/log';
 import { ResourceType } from '@/enums/resource';
 import {
   TrackMap,

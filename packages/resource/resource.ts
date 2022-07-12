@@ -1,6 +1,6 @@
-import { ResourceType, TrackCtorMap, Base } from '@chiulipine/const';
+import { ResourceType, Base } from '@chiulipine/const';
 
-import { VideoTrack, TrackOption } from '@chiulipine/track';
+import { VideoTrack, TrackOption, TrackCtorMap } from '@chiulipine/track';
 
 type ItemOptional = {
   id: string;
@@ -39,12 +39,7 @@ export class Resource extends Base {
 
   constructor(options: ResourceOption) {
     super(options.name, options.id);
-    this.src = options.src;
-    this.type = options.type;
-    this.thumbnail = options.thumbnail;
-    this.duration = options.duration;
-    this.checked = Boolean(options.checked);
-    this.referenced = Boolean(options.referenced);
+    Object.assign(this, options);
   }
 
   getProps() {

@@ -9,7 +9,6 @@ export function configComponentsPlugin() {
     resolvers: [
       AntDesignVueResolver(),
       (name): void | { name: string; from: string } => {
-        console.log(name);
         if (name.startsWith('Lp')) return { name, from: '@chiulipine/components' };
       },
     ],
