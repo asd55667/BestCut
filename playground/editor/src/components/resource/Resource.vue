@@ -1,25 +1,19 @@
 <template>
   <div class="resource-box-wrapper">
-    <div :class="['resource', size === '' ? 'h-20 w-34' : 'h-14 w-28']">
-      <!-- :usable="usable"
-        :favorite="favorite"
-        :show-add="showAdd" -->
-      <ResourceBox :resource="resource" :offline="offline" @pointermove="onResourceMove" />
+    <div :class="['resource', 'w-34 h-20']">
+      <ResourceBox :resource="resource" @pointermove="onResourceMove" />
 
       <div class="resource-box-mask" absolute top-0 left-0 w-fulll h-full v-show="maskVisible">
-        <!-- :usable="usable"
-          :favorite="favorite"
-          :show-add="showAdd" -->
         <ResourceBox
           ref="maskRef"
           draggable="true"
           :resource="resource"
-          :offline="offline"
           @pointerleave="onResourceLeave"
           @dragstart="onDragStart"
           @dragend="onDragEnd"
           v-click-outside:[exclude]="onClickOutside"
         />
+
         <Track class="resource-drag-view" hidden ref="trackRef" :track="track" />
       </div>
     </div>
@@ -31,13 +25,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { ComponentPublicInstance, PropType } from 'vue';
-
-import ResourceBox from './ResourceBox.vue';
-import Track from '@/components/Track.vue';
+import type { ComponentPublicInstance } from 'vue';
+import { Resource } from '@chiulipine/resource';
+import { isAudio, isSticker, isText } from '@chiulipine/utils';
 
 import { PlayerId } from '@/settings/playerSetting';
-import { ResourceItem, TextResource, AudioResource, StickerResource } from '@/logic/resource';
 import { setStyle, toggleClass } from '@/utils/dom';
 import { useTrackStore } from '@/store/track';
 import { usePreviewStore } from '@/store/preview';
@@ -51,24 +43,7 @@ type DragView = {
   top: number;
 };
 
-const props = defineProps({
-  referenced: {
-    type: Boolean,
-    default: false,
-  },
-  offline: {
-    type: Boolean,
-    default: false,
-  },
-  size: {
-    type: String,
-    default: '',
-  },
-  resource: {
-    type: Object as PropType<ResourceItem>,
-    default: {},
-  },
-});
+const { resource } = defineProps<{ resource: Resource }>();
 
 const trackStore = useTrackStore();
 const previewStore = usePreviewStore();
@@ -76,7 +51,7 @@ watch(
   () => trackStore.isResourceOver,
   (val: boolean) => {
     if (!trackRef.value || !maskView || !dragView.el) return;
-    if (!props.resource.usable) {
+    if (!resource.usable) {
       trackStore.setArea(ContainerType.OutSide);
       return;
     }
@@ -104,16 +79,13 @@ const maskVisible = ref(false);
 const maskRef = ref<ComponentPublicInstance | undefined>(undefined);
 const trackRef = ref<ComponentPublicInstance | undefined>(undefined);
 const track = computed(() => {
-  const trak = props.resource.toTrack();
+  const trak = resource.toTrack();
   if (trackStore.calcWidth) trak.width = trackStore.calcWidth(trak);
   return trak;
 });
-const resource = $computed(() => props.resource);
+
 const nameVisible = $computed(() => {
-  const b1 = resource instanceof TextResource;
-  const b2 = resource instanceof AudioResource;
-  const b3 = resource instanceof StickerResource;
-  return (!b1 && !b2 && !b3) || props.offline;
+  return (!isAudio(resource) && !isText(resource) && !isSticker(resource)) || resource.offline;
 });
 
 let maskView: HTMLElement | undefined;
@@ -209,7 +181,7 @@ onBeforeMount(() => {
 });
 
 const onClickOutside = () => {
-  if (props.resource.active) previewStore.player.stop();
+  if (resource.active) previewStore.player.stop();
   if (trackStore.resource) trackStore.setResource(undefined);
 };
 </script>

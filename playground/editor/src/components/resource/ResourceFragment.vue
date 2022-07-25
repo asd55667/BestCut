@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { ResourceFragment } from '@/logic/resource';
+import type { ResourceFragment } from '@chiulipine/resource';
 
-import { currentLib } from './useResource';
+import { currentLib } from '@/composables/resource';
 
-const props = defineProps<{ fragment: ResourceFragment }>();
+const { fragment } = defineProps<{ fragment: ResourceFragment }>();
 
 const offline = $computed(() => currentLib.value.offline);
-const isEmpty = $computed(() => !props.fragment.list.length);
+const isEmpty = $computed(() => !fragment.list.length);
 </script>
 
 <template>
@@ -21,13 +21,8 @@ const isEmpty = $computed(() => !props.fragment.list.length);
           v-for="(resource, j) in fragment.list"
           :key="j"
           class="local-resource-list relative m-2 text-xs"
-          :offline="offline"
           :resource="resource"
         />
-        <!-- :usable="resource.usable || fragment.usable"
-          :favorite="resource.favorite || fragment.favorite"
-          :showAdd="resource.showAdd || fragment.showAdd" -->
-        <!-- onEvent={offline ? () => {} : () => {}} // TODO: 添加离线资源 -->
       </div>
     </div>
 

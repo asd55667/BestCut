@@ -33,26 +33,20 @@ defineProps({
     <ALayout rounded-b-md overflow-hidden>
       <ALayoutSider v-if="sider" :class="sider.class" :width="sider.width">
         <slot name="sider">
-          <div center>
-            {{ 'sider' }}
-          </div>
+          <div center> {{ 'sider' }} </div>
         </slot>
       </ALayoutSider>
 
       <ALayout>
         <ALayoutContent h="5/6" overflow-auto>
           <slot name="content">
-            <div center>
-              {{ 'content' }}
-            </div>
+            <div center> {{ 'content' }} </div>
           </slot>
         </ALayoutContent>
 
         <ALayoutFooter v-if="footer" h="1/6">
           <slot name="footer">
-            <div center>
-              {{ 'footer' }}
-            </div>
+            <div center> {{ 'footer' }} </div>
           </slot>
         </ALayoutFooter>
       </ALayout>

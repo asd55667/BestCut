@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { PlusCircleFilled } from '@ant-design/icons-vue';
-import { ResourceType } from '@/enums/resource';
-import { ResourceItem } from '@/logic/resource';
-import { stretchImg } from '@/utils/image';
+import { Resource, ResourceType } from '@chiulipine/resource';
+import { stretchImg } from '@chiulipine/utils';
 import { usePreviewStoreWithOut } from '@/store/preview';
-import { addResource } from './useResource';
+import { addResource } from '@/composables/resource';
 
 const props = defineProps<{ empty: boolean; offline: boolean }>();
 
@@ -52,7 +51,7 @@ const loadLocalFile = () => {
       return;
     }
 
-    const resource = new ResourceItem({ type, src, thumbnail, duration, name: file.name });
+    const resource = new Resource({ type, src, thumbnail, duration, name: file.name });
     addResource(resource);
   };
   input.click();

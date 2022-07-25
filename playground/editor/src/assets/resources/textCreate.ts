@@ -1,4 +1,4 @@
-import { ResourceFragment, TextResource } from '@/logic/resource';
+import { ResourceFragment, TextResource } from '@chiulipine/resource';
 
 export const textCreate: ResourceFragment[] = [
   {

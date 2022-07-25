@@ -1,4 +1,4 @@
-import type { ResourceFragment } from '@/logic/resource';
+import { ResourceFragment } from '@chiulipine/resource';
 
 import { textCreate } from './textCreate';
 

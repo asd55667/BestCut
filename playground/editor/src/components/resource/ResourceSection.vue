@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { setTabIndex, setFragmentIdx } from './useResource';
-import { tabs, tabIndex, fragmentIdx, currentLib } from './useResource';
+import { setTabIndex, setFragmentIdx } from '@/composables/resource';
+import { tabs, tabIndex, fragmentIdx, currentLib } from '@/composables/resource';
 
 const { t } = useI18n();
 const title = t('components.resource');

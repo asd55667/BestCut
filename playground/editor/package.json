@@ -9,6 +9,7 @@
   "dependencies": {
     "@chiulipine/const": "workspace:*",
     "@chiulipine/resource": "workspace:*",
+    "@chiulipine/utils": "workspace:*",
     "@chiulipine/components": "workspace:*",
     "@chiulipine/track": "workspace:*"
   }

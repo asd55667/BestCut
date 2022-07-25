@@ -1,5 +1,5 @@
 import type { Attachment } from '../tracks/manager';
-import type { TextTrack, StickerTrack } from '../tracks';
+import type { TextTrack, StickerTrack } from '@chiulipine/track';
 
 import type { MP4PlayerOption } from '#/player';
 import type { DowndloadCallback } from './downloader';

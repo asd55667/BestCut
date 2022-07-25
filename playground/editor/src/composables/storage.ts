@@ -1,6 +1,6 @@
 // @ts-ignore
 import type { RemovableRef } from '@vueuse/core';
-import type { ResourceFragment } from '@/logic/resource';
+import { ResourceFragment } from '@chiulipine/resource';
 
 type LocalMedia = {
   [key: string]: ResourceFragment[];

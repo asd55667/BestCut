@@ -25,10 +25,10 @@ type ItemRequired = {
 type ResourceOption = Partial<ItemOptional> & ItemRequired;
 
 export class Resource extends Base {
-  src: string;
   type: ResourceType;
-  duration: string;
-  thumbnail: string;
+  src = '';
+  duration = '00:00';
+  thumbnail = '';
 
   usable = false;
   showAdd = false;
@@ -36,9 +36,11 @@ export class Resource extends Base {
   favorite = false;
   referenced = false;
   active = false;
+  offline = false;
 
   constructor(options: ResourceOption) {
     super(options.name, options.id);
+    this.type = options.type;
     Object.assign(this, options);
   }
 
@@ -125,5 +127,17 @@ export interface ResourceFragment {
   usable?: boolean;
   favorite?: boolean;
   showAdd?: boolean;
+  offline?: boolean;
   list: Resource[];
 }
+
+export const ResourceCtorMap = {
+  [ResourceType.Video]: VideoResource,
+  [ResourceType.Audio]: AudioResource,
+  [ResourceType.Picture]: PictureResource,
+  [ResourceType.Sticker]: StickerResource,
+  [ResourceType.Text]: TextResource,
+  [ResourceType.Effect]: EffectResource,
+  [ResourceType.Filter]: FilterResource,
+  [ResourceType.Transition]: TransitionResource,
+};

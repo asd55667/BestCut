@@ -1,5 +1,12 @@
 import { ResourceType } from '@chiulipine/const';
-import { Resource, PictureResource, AudioResource, VideoResource } from '@chiulipine/resource';
+import {
+  Resource,
+  PictureResource,
+  AudioResource,
+  VideoResource,
+  TextResource,
+  StickerResource,
+} from '@chiulipine/resource';
 
 const toString = Object.prototype.toString;
 
@@ -106,4 +113,12 @@ export function isAudio(resource: Resource): resource is AudioResource {
 
 export function isVideo(resource: Resource): resource is VideoResource {
   return resource.type === ResourceType.Video;
+}
+
+export function isText(resource: Resource): resource is TextResource {
+  return resource.type === ResourceType.Text;
+}
+
+export function isSticker(resource: Resource): resource is StickerResource {
+  return resource.type === ResourceType.Sticker;
 }

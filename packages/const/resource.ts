@@ -8,8 +8,3 @@ export enum ResourceType {
   Filter = 'filter',
   Transition = 'transition',
 }
-
-export enum ResourceLoc {
-  WrapTop = 1,
-  Top,
-}

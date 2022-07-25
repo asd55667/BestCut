@@ -1,3 +1,4 @@
+import type { Resource } from '@chiulipine/resource';
 import { defineStore } from 'pinia';
 
 import { store } from '@/store';
@@ -8,7 +9,6 @@ import { TrackMap, TrackItem, VideoTrack, isVideo, isAudio } from '@/logic/track
 import { ContainerType } from '@/enums/track';
 import { getDurationString, durationString2Sec } from '@/utils/player';
 import { mainList, audioList, videoList } from '@/../mocks/_track';
-import { ResourceItem } from '@/logic/resource';
 
 const Flag = 2;
 const mocks = [
@@ -43,7 +43,7 @@ interface TrackState {
   offset: number; // for dx of dragger
   hoverVisible: boolean; // timeline hover
   manager: TrackManager;
-  resource?: ResourceItem;
+  resource?: Resource;
 }
 
 export const useTrackStore = defineStore({
@@ -102,7 +102,7 @@ export const useTrackStore = defineStore({
       this.track = track;
       this.minfo = { i, j, type };
     },
-    setResource(resource?: ResourceItem) {
+    setResource(resource?: Resource) {
       if (this.resource?.active) {
         this.resource.active = false;
       }

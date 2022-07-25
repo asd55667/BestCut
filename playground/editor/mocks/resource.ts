@@ -1,4 +1,4 @@
-import type { ResourceFragment } from '@/logic/resource';
+import { ResourceFragment } from '@chiulipine/resource';
 
 const video = (n: number) =>
   new Array(n).fill({
@@ -7,7 +7,6 @@ const video = (n: number) =>
     name: '@word().mp4',
     thumbnail: '/media/video.png',
     src: '/media/bbb.mp4',
-    referenced: true,
   });
 
 const audio = (n: number, album = '', author = '') =>
@@ -15,7 +14,6 @@ const audio = (n: number, album = '', author = '') =>
     type: 'audio',
     duration: '@time("05:ss")',
     name: '@word().aac',
-    referenced: false,
     thumbnail: '/media/audio.png',
     src: '/media/bbb.aac',
     album,
@@ -29,7 +27,6 @@ const picture = (n: number) =>
     name: '@word().png',
     thumbnail: '/media/png.png',
     src: '/media/png.png',
-    referenced: false,
   });
 
 const text = (n: number) =>
@@ -88,6 +85,7 @@ const localLib = resourceMsg('/media/local', () => {
     lib: [
       {
         usable: true,
+        offline: true,
         list: [...video(2), ...audio(1), ...picture(1)],
         // list: [],
       },
@@ -132,6 +130,7 @@ const extractLib = resourceMsg('/audio/audioExtract', () => {
     lib: [
       {
         usable: true,
+        offline: true,
         // list: [...audio(3)],
         list: [],
       },

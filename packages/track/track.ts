@@ -7,7 +7,7 @@ import { FireFilled, FilterOutlined } from '@ant-design/icons-vue';
 
 import { videoFrame2Url } from '@chiulipine/utils';
 import { ResourceType, Base } from '@chiulipine/const';
-import type { MP4Source, Renderer, AttachmentParams } from '@chiulipine/player';
+import { MP4Source, Renderer, AttachmentParams } from '@chiulipine/player';
 
 type ItemOptional = {
   id: string;

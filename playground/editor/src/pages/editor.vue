@@ -22,8 +22,9 @@ const exportWorkspace = () => {
 
         <div class="right">
           <button right-36 absolute></button>
+
           <button
-            class="flex items-center justify-center h-8 w-16 p-2 rounded-sm texx-white bg-#6dced7"
+            class="flex items-center justify-center h-8 w-16 p-2 rounded-sm bg-#6dced7"
             @click="exportWorkspace"
           >
             <ExportOutlined text-md mr-1 />

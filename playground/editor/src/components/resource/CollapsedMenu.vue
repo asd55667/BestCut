@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { CaretRightOutlined, CaretDownOutlined } from '@ant-design/icons-vue';
-import { libs, libIndex, tabIndex, fragmentIdx } from './useResource';
-import { setLibIndex, setFragmentIdx, updateFragments } from './useResource';
+import { libs, libIndex, tabIndex, fragmentIdx } from '@/composables/resource';
+import { setLibIndex, setFragmentIdx, updateFragments } from '@/composables/resource';
 
 const { t } = useI18n();
 

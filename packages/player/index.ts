@@ -1,2 +1,2 @@
-export * from './render';
 export * from './mp4';
+export * from './renderer';
