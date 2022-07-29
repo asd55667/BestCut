@@ -36,7 +36,7 @@ const exportWorkspace = () => {
 
     <template #resource> <ResourceSection /> </template>
 
-    <template #preview> <Preview /> </template>
+    <template #preview> <PreviewSection /> </template>
 
     <template #config> <ConfigPanel /> </template>
 

@@ -5,8 +5,6 @@ const title = t('components.config');
 
 <template>
   <SectionLayout :title="title">
-    <template #content>
-      <div h-full w-full> </div>
-    </template>
+    <div h-full w-full> </div>
   </SectionLayout>
 </template>

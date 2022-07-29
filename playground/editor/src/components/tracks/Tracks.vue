@@ -158,68 +158,66 @@ setTimeout(() => {
       <TrackHead v-model:percent="percent" />
     </template>
 
-    <template #content>
-      <TimeLine
-        id="timeline"
-        relative
-        h-full
-        :draw="drawTimeline"
-        :style="`width: ${wrapperWidth}px`"
+    <TimeLine
+      id="timeline"
+      relative
+      h-full
+      :draw="drawTimeline"
+      :style="`width: ${wrapperWidth}px`"
+    >
+      <div
+        id="tracks-wrapper"
+        ref="tracksWrapperRef"
+        class="tracks-wrapper absolute h-full w-full select-none"
       >
         <div
-          id="tracks-wrapper"
-          ref="tracksWrapperRef"
-          class="tracks-wrapper absolute h-full w-full select-none"
+          class="tracks absolute w-full mt-2.5 overflow-y-scroll"
+          h="[calc(100%-0.625rem)]"
+          @dragenter="onResourceEnter"
+          @dragleave="onResourceLeave"
+          @drop="onResourceDrop"
         >
-          <div
-            class="tracks absolute w-full mt-2.5 overflow-y-scroll"
-            h="[calc(100%-0.625rem)]"
-            @dragenter="onResourceEnter"
-            @dragleave="onResourceLeave"
-            @drop="onResourceDrop"
-          >
-            <TrackContainer
-              :class="['video-container overflow-y-auto', !isMapEmpty ? 'min-h-1/3' : '']"
-              :lists="trackMap.video"
-              :type="ContainerType.Video"
-            />
+          <TrackContainer
+            :class="['video-container overflow-y-auto', !isMapEmpty ? 'min-h-1/3' : '']"
+            :lists="trackMap.video"
+            :type="ContainerType.Video"
+          />
 
-            <TrackContainer
-              ref="mainTrackRef"
-              :class="[
-                'main-container flex items-center',
-                isSticky && trackMap.video.length ? 'sticky-track' : '',
-                isMapEmpty ? 'absolute h-full w-full my-auto' : '',
-              ]"
-              :lists="[trackMap.main]"
-              :isMute="isMute"
-              :type="ContainerType.Main"
+          <TrackContainer
+            ref="mainTrackRef"
+            :class="[
+              'main-container flex items-center',
+              isSticky && trackMap.video.length ? 'sticky-track' : '',
+              isMapEmpty ? 'absolute h-full w-full my-auto' : '',
+            ]"
+            :lists="[trackMap.main]"
+            :isMute="isMute"
+            :type="ContainerType.Main"
+          >
+            <div
+              v-if="!isMapEmpty || isResourceOver"
+              class="text-lg w-full h-full rounded-xl flex items-center justify-center"
             >
               <div
-                v-if="!isMapEmpty || isResourceOver"
-                class="text-lg w-full h-full rounded-xl flex items-center justify-center"
+                class="rounded-xl flex items-center justify-center w-14 h-14"
+                border="5px solid #313135"
+                bg="#464649"
+                @click="onMute"
               >
-                <div
-                  class="rounded-xl flex items-center justify-center w-14 h-14"
-                  border="5px solid #313135"
-                  bg="#464649"
-                  @click="onMute"
-                >
-                  <AudioMutedOutlined v-if="isMute" />
-                  <SoundFilled v-else />
-                </div>
+                <AudioMutedOutlined v-if="isMute" />
+                <SoundFilled v-else />
               </div>
-            </TrackContainer>
+            </div>
+          </TrackContainer>
 
-            <TrackContainer
-              :class="['audio-container', !isMapEmpty ? 'min-h-1/3' : '']"
-              :lists="trackMap.audio"
-              :type="ContainerType.Audio"
-            />
-          </div>
+          <TrackContainer
+            :class="['audio-container', !isMapEmpty ? 'min-h-1/3' : '']"
+            :lists="trackMap.audio"
+            :type="ContainerType.Audio"
+          />
         </div>
-      </TimeLine>
-    </template>
+      </div>
+    </TimeLine>
   </SectionLayout>
 </template>
 

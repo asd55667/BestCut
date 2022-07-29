@@ -39,7 +39,7 @@ defineProps({
 
       <ALayout>
         <ALayoutContent h="5/6" overflow-auto>
-          <slot name="content">
+          <slot>
             <div center> {{ 'content' }} </div>
           </slot>
         </ALayoutContent>

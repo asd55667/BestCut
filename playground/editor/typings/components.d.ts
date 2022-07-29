@@ -14,13 +14,16 @@ declare module '@vue/runtime-core' {
     ALayoutFooter: typeof import('ant-design-vue/es')['LayoutFooter']
     ALayoutHeader: typeof import('ant-design-vue/es')['LayoutHeader']
     ALayoutSider: typeof import('ant-design-vue/es')['LayoutSider']
+    ASlider: typeof import('ant-design-vue/es')['Slider']
     CollapsedMenu: typeof import('./../src/components/resource/CollapsedMenu.vue')['default']
     ConfigPanel: typeof import('./../src/components/config-panel/ConfigPanel.vue')['default']
     EditorLayout: typeof import('./../src/layouts/EditorLayout.vue')['default']
     LocalFile: typeof import('./../src/components/resource/LocalFile.vue')['default']
     LpResourceBox: typeof import('@chiulipine/components')['LpResourceBox']
-    Preview: typeof import('./../src/components/preview/Preview.vue')['default']
-    PreviewFullScreen: typeof import('./../src/components/preview/PreviewFullScreen.vue')['default']
+    Preview: typeof import('./../src/components/preview/Preview.vue')['default'];
+    PreviewCanvas: typeof import('./../src/components/preview/PreviewCanvas.vue')['default']
+    PreviewFooter: typeof import('./../src/components/preview/PreviewFooter.vue')['default']
+    PreviewFullScreen: typeof import('./../src/components/preview/PreviewFullScreen.vue')['default'];
     PreviewSection: typeof import('./../src/components/preview/PreviewSection.vue')['default']
     Resource: typeof import('./../src/components/resource/Resource.vue')['default']
     ResourceBox: typeof import('./../src/components/resource/ResourceBox.vue')['default']

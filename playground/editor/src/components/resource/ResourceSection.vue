@@ -53,10 +53,8 @@ const switchFragment = (e: WheelEvent) => {
 
     <template #sider> <CollapsedMenu /> </template>
 
-    <template #content>
-      <div id="resource-list" h-full overflow-y-scroll p-1 @scroll="switchFragment">
-        <ResourceFragment v-for="(fragment, i) in fragments" :key="i" :fragment="fragment" />
-      </div>
-    </template>
+    <div id="resource-list" h-full overflow-y-scroll p-1 @scroll="switchFragment">
+      <ResourceFragment v-for="(fragment, i) in fragments" :key="i" :fragment="fragment" />
+    </div>
   </SectionLayout>
 </template>

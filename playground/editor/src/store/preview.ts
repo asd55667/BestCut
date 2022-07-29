@@ -24,9 +24,9 @@ export const usePreviewStore = defineStore({
       const { player } = this;
       return getDurationString(player.refs.total, player.fps);
     },
-    ratio(): string {
+    ratio(): number {
       const { refs } = this.player;
-      return refs.total ? ((refs.current / refs.total) * 100).toFixed(2) : '0';
+      return refs.total ? refs.current / refs.total : 0;
     },
   },
   actions: {
