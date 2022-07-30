@@ -6,10 +6,10 @@ import {
   FullscreenExitOutlined,
 } from '@ant-design/icons-vue';
 
-import { Duration0, PlayerId } from '@/settings/playerSetting';
+import { Duration0, PlayerId } from '@chiulipine/player';
+import { logger, LogFlag } from '@chiulipine/utils';
 import { usePreviewStore } from '@/store/preview';
 import { useTrackStore } from '@/store/track';
-import { logger, LogFlag } from '@/utils/log';
 
 //const emits = defineEmits([])
 const { inFullScreen } = defineProps<{ inFullScreen: boolean }>();

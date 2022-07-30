@@ -1,16 +1,13 @@
-import type { Attachment } from '../tracks/manager';
-import type { TextTrack, StickerTrack } from '@chiulipine/track';
-
-import type { MP4PlayerOption } from '#/player';
-import type { DowndloadCallback } from './downloader';
-
-import { getExtraData } from '@/utils/player';
-import { Downloader } from './downloader';
-import { isString } from '@/utils/is';
+import { ResourceType } from '@chiulipine/resource';
+import { getExtraData, isString } from '@chiulipine/utils';
+import { TextTrack, StickerTrack, Attachment } from '@chiulipine/track';
 
 import { Renderer } from '../renderer';
-import { ResourceType } from '@/enums/resource';
+import { Downloader, DowndloadCallback } from './downloader';
 
+type Id = { id: string; url?: string };
+type Canvas = { canvas: HTMLCanvasElement; url?: string };
+export type MP4PlayerOption = XOR<Id, Canvas> & { paused?: boolean };
 export class MP4Source {
   file: any;
   info?: any;

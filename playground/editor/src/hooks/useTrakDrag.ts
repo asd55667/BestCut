@@ -1,11 +1,11 @@
 import type { Ref } from 'vue';
-import type { TrackItem } from '@/logic/tracks';
+import type { Track } from '@chiulipine/track';
 
 import _ from 'lodash-es';
 
-import { setStyle } from '@/utils/dom';
+import { setStyle } from '@chiulipine/utils';
 import { useTrackStore } from '@/store/track';
-import { ContainerType } from '@/enums/track';
+import { ContainerType } from '@chiulipine/track';
 
 export const useTrakDrag = (draggedIdxs: Ref<{ i: number; j: number }>) => {
   let lastX = 0;
@@ -78,7 +78,7 @@ export const useTrakDrag = (draggedIdxs: Ref<{ i: number; j: number }>) => {
     lastX() {
       return lastX;
     },
-    dragstart: (e: DragEvent, track: TrackItem, i: number, j: number, type: ContainerType) => {
+    dragstart: (e: DragEvent, track: Track, i: number, j: number, type: ContainerType) => {
       // console.log('start');
       if (!traks) return;
       (lastX = e.pageX), (lastY = e.pageY);

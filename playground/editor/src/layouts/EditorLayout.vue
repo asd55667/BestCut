@@ -2,7 +2,7 @@
 import Splitter from '@/components/Splitter.vue';
 import { useLocale } from '@/hooks/useLocale';
 
-import { CanvasId } from '@/settings/playerSetting';
+import { CanvasId } from '@chiulipine/player';
 import { usePreviewStore } from '@/store/preview';
 import { useTrackStore } from '@/store/track';
 

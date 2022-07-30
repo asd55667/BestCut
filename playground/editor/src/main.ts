@@ -3,7 +3,7 @@ import App from './App.vue';
 import { setupRouter } from './router';
 import { setupStore } from '@/store';
 import { setupI18n } from '@/modules/i18n';
-import { setupErrorHandle } from '@/logic/error-handle';
+import { setupErrorHandle } from '@/modules/error-handle';
 
 import '@unocss/reset/tailwind.css';
 import './styles/main.css';

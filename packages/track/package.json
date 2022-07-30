@@ -5,6 +5,7 @@
   "dependencies": {
     "@chiulipine/const": "workspace:*",
     "@chiulipine/player": "workspace:*",
+    "@chiulipine/resource": "workspace:*",
     "@chiulipine/utils": "workspace:*"
   }
 }

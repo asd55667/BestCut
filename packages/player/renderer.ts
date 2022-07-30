@@ -1,8 +1,7 @@
 import * as THREE from 'three';
 
-import { ResourceType } from '@/enums/resource';
-import { Attachment } from '@/logic/tracks/manager';
-import type { TextTrack, StickerTrack } from '@/logic/tracks';
+import { ResourceType } from '@chiulipine/resource';
+import { Attachment, TextTrack, StickerTrack } from '@chiulipine/track';
 
 const FRUSTUM = 0.5;
 

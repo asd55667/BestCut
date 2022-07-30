@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import type { ComponentPublicInstance } from 'vue';
 
-import { on, off } from '@/utils/dom';
-import { MouseCtl } from '@/logic/mouse';
+import { on, off } from '@chiulipine/utils';
+import { MouseCtl } from '@chiulipine/utils/mouse';
 import { useTrackStore } from '@/store/track';
-import { TrackHeadWidth, TimelineTailWidth } from '@/settings/tracksSetting';
+import { TrackHeadWidth, TimelineTailWidth } from '@chiulipine/track';
 
 type Props = {
   draw: (x?: number) => void;

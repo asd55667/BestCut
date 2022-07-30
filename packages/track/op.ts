@@ -1,6 +1,6 @@
 import { ResourceType } from '@chiulipine/const';
 import { Track } from './track';
-// import { swap } from '@/utils';
+// import { swap } from '@chiulipine/utils';
 
 export const offset = 20;
 

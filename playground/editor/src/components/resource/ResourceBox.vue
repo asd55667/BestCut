@@ -4,7 +4,7 @@ import { Resource } from '@chiulipine/resource';
 import { addFavorite, removeFavorite } from '@/composables/resource';
 import { usePreviewStore } from '@/store/preview';
 import { useTrackStore } from '@/store/track';
-import { CanvasId } from '@/settings/playerSetting';
+import { CanvasId } from '@chiulipine/player';
 
 const previewStore = usePreviewStore();
 const trackStore = useTrackStore();

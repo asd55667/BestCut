@@ -2,21 +2,21 @@
 import type { PropType } from 'vue';
 import { RetweetOutlined } from '@ant-design/icons-vue';
 
-import { ResourceType } from '@/enums/resource';
+import { ResourceType } from '@chiulipine/resource';
 import {
   AudioTrack,
   VideoTrack,
   StickerTrack,
   FilterTrack,
   EffectTrack,
-  TrackItem,
-} from '@/logic/tracks';
+  Track,
+} from '@chiulipine/track';
 
 export default defineComponent({
   name: 'Track',
   props: {
     track: {
-      type: Object as PropType<TrackItem>,
+      type: Object as PropType<Track>,
       default: {},
     },
     isMute: {
@@ -28,7 +28,7 @@ export default defineComponent({
   setup(props, { slots }) {
     const track = computed(() => props.track);
 
-    const getTrackHead = (track: TrackItem) => {
+    const getTrackHead = (track: Track) => {
       return [track.name, track.duration];
     };
 
@@ -61,7 +61,7 @@ export default defineComponent({
       </div>
     );
 
-    const Attachment = (track: TrackItem) => (
+    const Attachment = (track: Track) => (
       <div class={'attachment-track track-item-head'} w-full>
         {track instanceof FilterTrack || track instanceof EffectTrack
           ? h(track.icon, { class: 'track-item-title' })

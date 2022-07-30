@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useTrackStore } from '@/store/track';
-import { PlayerId } from '@/settings/playerSetting';
+import { PlayerId } from '@chiulipine/player';
 import { usePreviewStore } from '@/store/preview';
 
 const { t } = useI18n();

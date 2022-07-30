@@ -1,4 +1,4 @@
-import { noop } from '@/utils/index';
+import { noop } from '@chiulipine/utils';
 import axios from 'axios';
 
 export type DowndloadCallback = (

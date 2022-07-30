@@ -1,13 +1,11 @@
-import type { Resource } from '@chiulipine/resource';
 import { defineStore } from 'pinia';
+import type { Resource } from '@chiulipine/resource';
+import { ContainerType, deleteTrack } from '@chiulipine/track';
+import { TrackManager, TrackMap, Track, VideoTrack, isVideo, isAudio } from '@chiulipine/track';
+import { getDurationString, durationString2Sec } from '@chiulipine/utils';
 
 import { store } from '@/store';
-import { deleteTrack } from '@/logic/tracks/op';
-import { TrackManager } from '@/logic/tracks/manager';
-import { TrackMap, TrackItem, VideoTrack, isVideo, isAudio } from '@/logic/tracks';
 
-import { ContainerType } from '@/enums/track';
-import { getDurationString, durationString2Sec } from '@/utils/player';
 import { mainList, audioList, videoList } from '@/../mocks/_track';
 
 const Flag = 2;
@@ -39,7 +37,7 @@ interface TrackState {
   trackMap: TrackMap; // data of timeline
   minfo: Minfo; // map
   tinfo: Tinfo; // timeline
-  track?: TrackItem; // active track
+  track?: Track; // active track
   offset: number; // for dx of dragger
   hoverVisible: boolean; // timeline hover
   manager: TrackManager;
@@ -98,7 +96,7 @@ export const useTrackStore = defineStore({
     setArea(_area: ContainerType) {
       this._area = _area;
     },
-    setTrack(track?: TrackItem, i = -1, j = -1, type?: keyof TrackMap) {
+    setTrack(track?: Track, i = -1, j = -1, type?: keyof TrackMap) {
       this.track = track;
       this.minfo = { i, j, type };
     },
@@ -116,7 +114,7 @@ export const useTrackStore = defineStore({
       if (!this.track || !type) return;
       const inMain = type === 'main';
       let lists = this.trackMap[type];
-      lists = (inMain ? [lists] : lists) as TrackItem[][];
+      lists = (inMain ? [lists] : lists) as Track[][];
       deleteTrack(lists, i, j, inMain);
       this.track = undefined;
       // this.minfo = { i: -1, j: -1 };
@@ -138,7 +136,7 @@ export const useTrackStore = defineStore({
       if (unit === 0 || step === 0) return 0;
       return (x / step) * unit * 1000;
     },
-    calcWidth(track: TrackItem) {
+    calcWidth(track: Track) {
       const { unit, step } = this.tinfo;
       if (unit === 0 || step === 0) return 0;
       let w;
@@ -164,7 +162,7 @@ export const useTrackStore = defineStore({
       if (!type || !(type in this.trackMap)) return;
       this.trackMap[type] = lists;
     },
-    addTrack(track: TrackItem) {
+    addTrack(track: Track) {
       if (isVideo(track.type)) this.trackMap.main.push(track);
       else if (isAudio(track.type)) this.trackMap.audio.push([track]);
       else this.trackMap.video.splice(this.videoIdx, 0, [track]);

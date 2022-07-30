@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 
-import { isString } from '@/utils/is';
+import { isString } from '@chiulipine/utils';
 
 defineProps({
   title: {

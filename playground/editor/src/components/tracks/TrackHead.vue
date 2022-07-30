@@ -6,7 +6,7 @@ import { ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons-vue';
 import { useTrackStore } from '@/store/track';
 
 import * as Tabs from './TrackHeadTabs';
-import { isVideo, isAudio, isPicture } from '@/logic/tracks';
+import { isVideo, isAudio, isPicture } from '@chiulipine/track';
 
 type Tab = {
   component: any;

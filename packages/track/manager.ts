@@ -1,17 +1,8 @@
-import { logger, LogFlag } from '../../utils/log';
-import { ResourceType } from '@/enums/resource';
-import {
-  TrackMap,
-  TrackItem,
-  AttachmentTrack,
-  MediaTrack,
-  isMedia,
-  isVideo,
-  isAudio,
-} from '@/logic/tracks';
-import { durationString2Sec, ms2fs } from '@/utils/player';
-import { MP4Player } from '@/logic/mp4';
-import { CanvasId } from '@/settings/playerSetting';
+import { logger, LogFlag, durationString2Sec, ms2fs } from '@chiulipine/utils';
+import { ResourceType } from '@chiulipine/resource';
+import { TrackMap, Track, AttachmentTrack, MediaTrack, isMedia, isVideo, isAudio } from './track';
+
+import { CanvasId, MP4Player } from '@chiulipine/player';
 
 export type Attachment = {
   track: AttachmentTrack;
@@ -255,7 +246,7 @@ export class TrackManager {
     return Math.max(...ends);
   }
 
-  listEnd(list: TrackItem[]) {
+  listEnd(list: Track[]) {
     return list.reduce(
       (t, trak) =>
         t +

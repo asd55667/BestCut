@@ -1,26 +1,19 @@
 <script lang="ts" setup>
 import type { ComponentPublicInstance } from 'vue';
-import { TrackMap, TrackItem } from '@/logic/tracks';
+
+import _ from 'lodash-es';
+import { TrackMap, Track } from '@chiulipine/track';
 
 import { SoundFilled, AudioMutedOutlined } from '@ant-design/icons-vue';
 
-import SectionLayout from '@/layouts/SectionLayout.vue';
-import TrackContainer from './TrackContainer.vue';
-import TimeLine from './TimeLine.vue';
-import TrackHead from './TrackHead.vue';
-
-import { TrackHeadWidth, TimelineTailWidth } from '@/settings/tracksSetting';
-
 import { useTimeLine } from '@/hooks/useTimeLine';
-import { getStyle, setStyle } from '@/utils/dom';
+import { getStyle, setStyle } from '@chiulipine/utils';
 
-import { forEachValue } from '@/utils';
+import { forEachValue } from '@chiulipine/utils';
 import { useTrackStore } from '@/store/track';
-import { ContainerType } from '@/enums/track';
+import { ContainerType, TrackHeadWidth, TimelineTailWidth } from '@chiulipine/track';
 
-import _ from 'lodash-es';
-
-type TrackStateItem = TrackItem[] | TrackItem[][];
+type TrackStateItem = Track[] | Track[][];
 
 const { t } = useI18n();
 const title = t('components.tracks');
@@ -50,7 +43,7 @@ const { useUnit, initTimeLine, drawTimeline } = useTimeLine(600, 30);
 const footerRef = ref<ComponentPublicInstance | null>(null);
 const updateTrackWidth = () => {
   let trackWidth = 0;
-  const updateWidth = (key: string, track: TrackStateItem | TrackItem) => {
+  const updateWidth = (key: string, track: TrackStateItem | Track) => {
     let left = 0;
     if (!Array.isArray(track)) {
       const width = trackStore.calcWidth(track);

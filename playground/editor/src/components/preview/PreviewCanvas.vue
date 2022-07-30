@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CanvasId } from '@/settings/playerSetting';
+import { CanvasId } from '@chiulipine/player';
 //const emits = defineEmits([])
 // const props = defineProps<{}>()s
 </script>

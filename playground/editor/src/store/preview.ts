@@ -3,8 +3,8 @@ import type { MP4PlayerOption } from '#/player';
 import { defineStore } from 'pinia';
 
 import { store } from '@/store';
-import { MP4Player } from '@/logic/mp4';
-import { getDurationString, clipDurationString } from '@/utils/player';
+import { MP4Player } from '@chiulipine/player';
+import { getDurationString, clipDurationString } from '@chiulipine/utils';
 
 interface PreviewState {
   player: MP4Player;

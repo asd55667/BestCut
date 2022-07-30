@@ -1,11 +1,11 @@
 <script lang="ts">
 import type { ComponentPublicInstance, PropType } from 'vue';
 
-import { isMedia, TrackItem } from '@/logic/tracks';
+import { isMedia, Track } from '@chiulipine/track';
 import { MoreOutlined } from '@ant-design/icons-vue';
 
-import { MouseCtl } from '@/logic/mouse';
-import { getShapedArrary } from '@/utils';
+import { MouseCtl } from '@chiulipine/utils/mouse';
+import { getShapedArrary } from '@chiulipine/utils';
 
 const offset = 20;
 export default defineComponent({
@@ -15,11 +15,11 @@ export default defineComponent({
   },
   props: {
     lists: {
-      type: Array as PropType<TrackItem[][]>,
+      type: Array as PropType<Track[][]>,
       default: () => [],
     },
     track: {
-      type: Object as PropType<TrackItem>,
+      type: Object as PropType<Track>,
       default: {},
     },
     i: {
@@ -42,7 +42,7 @@ export default defineComponent({
     const mls: (MouseCtl | null)[][] = getShapedArrary(props.lists, null);
     const mrs: (MouseCtl | null)[][] = getShapedArrary(props.lists, null);
 
-    const onTrackLeft = (track: TrackItem, i: number, j: number) => {
+    const onTrackLeft = (track: Track, i: number, j: number) => {
       emit('update:canDrag', false);
 
       const left = (trackLeftRef.value?.$el || trackLeftRef.value) as HTMLElement;
@@ -66,7 +66,7 @@ export default defineComponent({
       };
     };
 
-    const onTrackRight = (track: TrackItem, i: number, j: number) => {
+    const onTrackRight = (track: Track, i: number, j: number) => {
       emit('update:canDrag', false);
       const right = (trackRightRef.value?.$el || trackRightRef.value) as HTMLElement;
       let mr = mrs[i][j];

@@ -1,21 +1,16 @@
 <script lang="ts" setup>
+import { ContainerType, TrackHeadWidth } from '@chiulipine/track';
+import { isMedia, isVideo, isAudio, TrackMap, Track } from '@chiulipine/track';
+import { searchMainIdx, searchRowIdx, searchColIdx } from '@chiulipine/track/op';
+import { updateMainOrder, updateOrder, deleteTrack } from '@chiulipine/track/op';
+
+import { useTrackStore } from '@/store/track';
+import { useTrakDrag } from '@/hooks/useTrakDrag';
+import { trackFocusShortcut } from '@/shortcuts/track';
 import { ClickOutside as vClickOutside } from '@/directives';
 
-import { TrackHeadWidth } from '@/settings/tracksSetting';
-import { useTrackStore } from '@/store/track';
-
-import { isMedia, isVideo, isAudio, TrackMap, TrackItem } from '@/logic/tracks';
-import { searchMainIdx, searchRowIdx, searchColIdx } from '@/logic/tracks/op';
-import { updateMainOrder, updateOrder, deleteTrack } from '@/logic/tracks/op';
-
-import TrackBorder from './TrackBorder.vue';
-import Track from '@/components/Track.vue';
-import { ContainerType } from '@/enums/track';
-import { useTrakDrag } from '@/hooks/useTrakDrag';
-import { trackFocusShortCut } from '@/shortcuts/track';
-
 type Props = {
-  lists: TrackItem[][];
+  lists: Track[][];
   type: ContainerType;
 };
 const props = withDefaults(defineProps<Props>(), {
@@ -31,7 +26,7 @@ const inVideo = () => props.type === ContainerType.Video;
 const inAudio = () => props.type === ContainerType.Audio;
 
 const trackStore = useTrackStore();
-const updateMap = (track: TrackItem, lists: TrackItem[][]) => {
+const updateMap = (track: Track, lists: Track[][]) => {
   let type = track.type as keyof TrackMap;
   if (!isMedia(track.type)) type = 'video';
   else if (isVideo(track.type) && track.marginLeft === 0) type = 'main';
@@ -41,7 +36,7 @@ const updateMap = (track: TrackItem, lists: TrackItem[][]) => {
 const canDrag = ref(true);
 const draggedIdxs = ref({ i: -1, j: -1 });
 const activeIdxs = ref({ i: -1, j: -1 });
-const activeTrak = ref<undefined | TrackItem>(undefined);
+const activeTrak = ref<undefined | Track>(undefined);
 watch(activeIdxs, (idxs: { i: number; j: number }) => {
   const { i, j } = idxs;
   if (i === -1 || j === -1) return;
@@ -178,7 +173,7 @@ const shadowLeft = computed(() => {
   return Math.max(shadowOffset.value + ml + shadowDx.value, 0);
 });
 
-const swapMainTrack = (list: TrackItem[], dx: number, j: number, track?: TrackItem) => {
+const swapMainTrack = (list: Track[], dx: number, j: number, track?: Track) => {
   // index in dragging
   shadowDx.value = 0;
   let { idx, dx: _dx } = searchMainIdx(list, dx, j);
@@ -227,7 +222,7 @@ const swapMainTrack = (list: TrackItem[], dx: number, j: number, track?: TrackIt
   return idx;
 };
 
-const onTrackDown = (e: MouseEvent, track: TrackItem, i: number, j: number) => {
+const onTrackDown = (e: MouseEvent, track: Track, i: number, j: number) => {
   e.stopPropagation();
   setTimeout(() => {
     trackStore.setTrack(track, i, j, props.type as keyof TrackMap);
@@ -238,9 +233,9 @@ const onTrackDown = (e: MouseEvent, track: TrackItem, i: number, j: number) => {
   window.addEventListener('keyup', offShortcut);
 };
 
-const { onShortcut, offShortcut } = trackFocusShortCut();
+const { onShortcut, offShortcut } = trackFocusShortcut();
 
-const onClickOutside = (track: TrackItem) => {
+const onClickOutside = (track: Track) => {
   if (track.active) {
     track.active = false;
     trackStore.setTrack(undefined);
@@ -564,7 +559,7 @@ onMounted(() => {
           draggable="true"
           @dragstart="(e: DragEvent) => trackDragger.dragstart(e, track, i, j, props.type)"
         >
-          <Track
+          <TrackBox
             :track="track"
             :isMute="isMute"
             @pointerdown="(e: PointerEvent) => onTrackDown(e, track, i, j)"
@@ -578,7 +573,7 @@ onMounted(() => {
               :lists="lists"
               v-model:canDrag="canDrag"
             />
-          </Track>
+          </TrackBox>
         </div>
 
         <!-- Shadow -->

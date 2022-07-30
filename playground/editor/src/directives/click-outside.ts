@@ -1,5 +1,5 @@
-import { on } from '@/utils/dom';
-import { isServer } from '@/utils/is';
+import { on } from '@chiulipine/utils';
+import { isServer } from '@chiulipine/utils';
 
 import type { ComponentPublicInstance, DirectiveBinding, ObjectDirective } from 'vue';
 

@@ -1,6 +1,6 @@
 import { useTrackStore } from '@/store/track';
 
-export const trackFocusShortCut = () => {
+export const trackFocusShortcut = () => {
   let isCtrlPressing = false;
   const trackStore = useTrackStore();
 

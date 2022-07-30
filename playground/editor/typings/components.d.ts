@@ -34,8 +34,9 @@ declare module '@vue/runtime-core' {
     SectionLayout: typeof import('./../src/layouts/SectionLayout.vue')['default']
     Splitter: typeof import('./../src/components/Splitter.vue')['default']
     TimeLine: typeof import('./../src/components/tracks/TimeLine.vue')['default']
-    Track: typeof import('./../src/components/Track.vue')['default']
+    Track: typeof import('./../src/components/Track.vue')['default'];
     TrackBorder: typeof import('./../src/components/tracks/TrackBorder.vue')['default']
+    TrackBox: typeof import('./../src/components/TrackBox.vue')['default']
     TrackContainer: typeof import('./../src/components/tracks/TrackContainer.vue')['default']
     TrackHead: typeof import('./../src/components/tracks/TrackHead.vue')['default']
     Tracks: typeof import('./../src/components/tracks/Tracks.vue')['default']

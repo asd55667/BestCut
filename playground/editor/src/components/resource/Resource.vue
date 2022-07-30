@@ -1,41 +1,15 @@
-<template>
-  <div class="resource-box-wrapper">
-    <div :class="['resource', 'w-34 h-20']">
-      <ResourceBox :resource="resource" @pointermove="onResourceMove" />
-
-      <div class="resource-box-mask" absolute top-0 left-0 w-fulll h-full v-show="maskVisible">
-        <ResourceBox
-          ref="maskRef"
-          draggable="true"
-          :resource="resource"
-          @pointerleave="onResourceLeave"
-          @dragstart="onDragStart"
-          @dragend="onDragEnd"
-          v-click-outside:[exclude]="onClickOutside"
-        />
-
-        <Track class="resource-drag-view" hidden ref="trackRef" :track="track" />
-      </div>
-    </div>
-
-    <div v-if="resource.name && nameVisible" text="#838383 left xs" ml-2 mt-1 h-4>
-      {{ resource.name }}
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import type { ComponentPublicInstance } from 'vue';
 import { Resource } from '@chiulipine/resource';
 import { isAudio, isSticker, isText } from '@chiulipine/utils';
 
-import { PlayerId } from '@/settings/playerSetting';
-import { setStyle, toggleClass } from '@/utils/dom';
+import { PlayerId } from '@chiulipine/player';
+import { setStyle, toggleClass } from '@chiulipine/utils';
 import { useTrackStore } from '@/store/track';
 import { usePreviewStore } from '@/store/preview';
 
 import { ClickOutside as vClickOutside } from '@/directives';
-import { ContainerType } from '@/enums/track';
+import { ContainerType } from '@chiulipine/const';
 
 type DragView = {
   el?: HTMLElement;
@@ -185,6 +159,32 @@ const onClickOutside = () => {
   if (trackStore.resource) trackStore.setResource(undefined);
 };
 </script>
+
+<template>
+  <div class="resource-box-wrapper">
+    <div :class="['resource', 'w-34 h-20']">
+      <ResourceBox :resource="resource" @pointermove="onResourceMove" />
+
+      <div class="resource-box-mask" absolute top-0 left-0 w-fulll h-full v-show="maskVisible">
+        <ResourceBox
+          ref="maskRef"
+          draggable="true"
+          :resource="resource"
+          @pointerleave="onResourceLeave"
+          @dragstart="onDragStart"
+          @dragend="onDragEnd"
+          v-click-outside:[exclude]="onClickOutside"
+        />
+
+        <TrackBox class="resource-drag-view" hidden ref="trackRef" :track="track" />
+      </div>
+    </div>
+
+    <div v-if="resource.name && nameVisible" text="#838383 left xs" ml-2 mt-1 h-4>
+      {{ resource.name }}
+    </div>
+  </div>
+</template>
 
 <style lang="less" scoped>
 .resource-drag {
