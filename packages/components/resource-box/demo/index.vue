@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { VideoResource, AudioResource } from '@chiulipine/resource';
 import ResourceBox from '../ResourceBox.vue';
+import { VideoResource, AudioResource } from '@chiulipine/resource';
 
 const video = ref(
   new VideoResource({
@@ -58,17 +58,31 @@ const audio_active_ratio = ref(0.5);
 <template>
   <div h-500px>
     <div flex flex-wrap gap-10>
-      <div w-34 h-20> <ResourceBox :resource="video" v-model="video_ratio" /></div>
-      <div w-34 h-20> <ResourceBox :resource="audio" v-model="audio_ratio" /></div>
+      <div w-34 h-20>
+        <ResourceBox :resource="video" :ratio="video_ratio" @click="(v) => (video_ratio = v)" />
+      </div>
+      <div w-34 h-20>
+        <ResourceBox :resource="audio" :ratio="audio_ratio" @click="(v) => (audio_ratio = v)" />
+      </div>
     </div>
 
     <h2>Active</h2>
     <div flex flex-wrap gap-10>
       <div w-68 h-40>
-        <ResourceBox :resource="video_active" v-model="video_active_ratio" favorite />
+        <ResourceBox
+          :resource="video_active"
+          :ratio="video_active_ratio"
+          favorite
+          @click="(v) => (video_active_ratio = v)"
+        />
       </div>
       <div w-68 h-40>
-        <ResourceBox :resource="audio_active" v-model="audio_active_ratio" favorite />
+        <ResourceBox
+          :resource="audio_active"
+          :ratio="audio_active_ratio"
+          favorite
+          @click="(v) => (audio_active_ratio = v)"
+        />
       </div>
     </div>
   </div>

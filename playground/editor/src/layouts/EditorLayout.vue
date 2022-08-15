@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import Splitter from '@/components/Splitter.vue';
 import { useLocale } from '@/hooks/useLocale';
 
 import { CanvasId } from '@chiulipine/player';
@@ -24,8 +23,6 @@ const configW = ref(0);
 
 const splitterWidth = ref(10);
 const splitterHeight = ref(10);
-
-const previewRatio = rightRatio;
 
 const resourceRatio = ref(leftRatio);
 const configRatio = ref(rightRatio);
@@ -74,37 +71,6 @@ onUnmounted(() => {
   document.removeEventListener('fullscreenchange', onResize);
 });
 
-const onWidthChangeLeft = (widthChange: any) => {
-  let { pre } = widthChange;
-  const { clientWidth: w } = document.body;
-  pre = pre > w * leftRatio ? pre : w * leftRatio;
-  const remain = w * (1 - previewRatio) - configW.value - 2 * splitterWidth.value;
-  resourceW.value = remain > pre ? pre : remain;
-  resourceRatio.value = resourceW.value / w;
-  canvasSizeChange();
-};
-
-const onWidthChangeRight = (widthChange: any) => {
-  let { after } = widthChange;
-  const { clientWidth: w } = document.body;
-  after = after > w * rightRatio ? after : w * rightRatio;
-  const remain = w * (1 - previewRatio) - resourceW.value - 2 * splitterWidth.value;
-  configW.value = remain > after ? after : remain;
-  configRatio.value = configW.value / w;
-  canvasSizeChange();
-};
-
-const onHeightChange = (heightChange: any) => {
-  let { after } = heightChange;
-  const { innerHeight: h } = window;
-  let ratio = (after / h) * 100;
-  ratio = Math.max(ratio, 30);
-  ratio = Math.min(ratio, 60);
-  trackRatio.value = ratio;
-
-  canvasSizeChange();
-};
-
 const { t } = useI18n();
 const idx = ref<number>(0);
 const { locale, availableLocales, changeLocale } = useLocale();
@@ -125,49 +91,44 @@ const switchLang = async () => {
 </script>
 
 <template>
-  <ALayout>
-    <ALayoutHeader>
-      <slot name="header">
-        <div center h-full>
-          {{ t('commonheader') }}
-          <a-button @click="switchLang" absolute right-36>
-            {{ getLocaleText }}
-          </a-button>
-        </div>
-      </slot>
-    </ALayoutHeader>
+  <ALayoutHeader>
+    <slot name="header">
+      <div center h-full>
+        {{ t('commonheader') }}
+        <a-button @click="switchLang" absolute right-36>
+          {{ getLocaleText }}
+        </a-button>
+      </div>
+    </slot>
+  </ALayoutHeader>
 
-    <ALayout class="layout-content" :style="`height: ${95 - trackRatio}vh;`" bg-black px-2>
-      <ALayoutSider :width="resourceW">
+  <LpSplitPanes class="h-95vh bg-black px-2">
+    <LpSplitPanes val="70%" min="300px" vertical>
+      <div center val="30%" min="200">
         <slot name="resource">
-          <div center bg-blue-500 rounded-md>{{ t('common.resource') }}</div>
+          <div center w-full bg-blue-500 rounded-md>{{ t('common.resource') }}</div>
         </slot>
-      </ALayoutSider>
+      </div>
 
-      <Splitter class="splitter" vertical :value="splitterWidth" @width="onWidthChangeLeft" />
-
-      <ALayoutContent class="bg-black">
+      <div center val="45%" min="300">
         <slot name="preview">
-          <div center rounded-md bg-green-500>{{ t('common.preview') }}</div>
+          <div center w-full rounded-md bg-green-500>{{ t('common.preview') }}</div>
         </slot>
-      </ALayoutContent>
+      </div>
 
-      <Splitter class="splitter" vertical :value="splitterWidth" @width="onWidthChangeRight" />
-      <ALayoutSider :width="configW">
+      <div center val="25%" min="100">
         <slot name="config">
-          <div center rounded-md bg-red-500>{{ t('common.config') }}</div>
+          <div center w-full rounded-md bg-red-500>{{ t('common.config') }}</div>
         </slot>
-      </ALayoutSider>
-    </ALayout>
+      </div>
+    </LpSplitPanes>
 
-    <Splitter class="splitter" :value="splitterHeight" @height="onHeightChange" />
-
-    <ALayoutFooter bg-black :style="`height: calc(${trackRatio}vh - ${splitterHeight}px)`">
+    <footer center val="30%" min="100">
       <slot name="track">
-        <div center rounded-md bg-purple-500>{{ t('common.track') }}</div>
+        <div center w-full rounded-md bg-purple-500>{{ t('common.track') }}</div>
       </slot>
-    </ALayoutFooter>
-  </ALayout>
+    </footer>
+  </LpSplitPanes>
 </template>
 
 <style lang="less" scoped>

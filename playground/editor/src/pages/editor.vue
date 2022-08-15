@@ -34,13 +34,13 @@ const exportWorkspace = () => {
       </div>
     </template>
 
-    <template #resource> <ResourceSection /> </template>
+    <template #resource> <ResourceSection w-full h-full /> </template>
 
-    <template #preview> <PreviewSection /> </template>
+    <template #preview> <PreviewSection w-full h-full /> </template>
 
-    <template #config> <ConfigPanel /> </template>
+    <template #config> <ConfigPanel w-full h-full /> </template>
 
-    <template #track> <Tracks /> </template>
+    <template #track> <Tracks w-full h-full /> </template>
   </EditorLayout>
 </template>
 

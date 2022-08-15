@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import Icons from 'unplugin-icons/vite';
+import VueJsx from '@vitejs/plugin-vue-jsx';
 import IconsResolver from 'unplugin-icons/resolver';
 import Components from 'unplugin-vue-components/vite';
 import UnoCSS from 'unocss/vite';
@@ -18,6 +19,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    VueJsx(),
     MarkdownTransform(),
     AutoImport({
       dirs: [resolve(__dirname, '.vitepress/theme/composables')],

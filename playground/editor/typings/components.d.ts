@@ -20,10 +20,9 @@ declare module '@vue/runtime-core' {
     EditorLayout: typeof import('./../src/layouts/EditorLayout.vue')['default']
     LocalFile: typeof import('./../src/components/resource/LocalFile.vue')['default']
     LpResourceBox: typeof import('@chiulipine/components')['LpResourceBox']
-    Preview: typeof import('./../src/components/preview/Preview.vue')['default'];
+    LpSplitPanes: typeof import('@chiulipine/components')['LpSplitPanes']
     PreviewCanvas: typeof import('./../src/components/preview/PreviewCanvas.vue')['default']
     PreviewFooter: typeof import('./../src/components/preview/PreviewFooter.vue')['default']
-    PreviewFullScreen: typeof import('./../src/components/preview/PreviewFullScreen.vue')['default'];
     PreviewSection: typeof import('./../src/components/preview/PreviewSection.vue')['default']
     Resource: typeof import('./../src/components/resource/Resource.vue')['default']
     ResourceBox: typeof import('./../src/components/resource/ResourceBox.vue')['default']
@@ -34,7 +33,6 @@ declare module '@vue/runtime-core' {
     SectionLayout: typeof import('./../src/layouts/SectionLayout.vue')['default']
     Splitter: typeof import('./../src/components/Splitter.vue')['default']
     TimeLine: typeof import('./../src/components/tracks/TimeLine.vue')['default']
-    Track: typeof import('./../src/components/Track.vue')['default'];
     TrackBorder: typeof import('./../src/components/tracks/TrackBorder.vue')['default']
     TrackBox: typeof import('./../src/components/TrackBox.vue')['default']
     TrackContainer: typeof import('./../src/components/tracks/TrackContainer.vue')['default']

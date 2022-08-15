@@ -7,6 +7,8 @@ const Guide: DefaultTheme.SidebarItem[] = [
 
 const Components: DefaultTheme.SidebarItem[] = [
   { text: 'ResourceBox', link: '/components/resource-box/' },
+  { text: 'TrackBox', link: '/components/track-box/' },
+  { text: 'SplitPanes', link: '/components/split-panes/' },
   //
 ];
 
