@@ -19,6 +19,7 @@ type ItemOptional = {
 
   offset: number;
   height: number;
+  width: number;
 };
 
 type ItemRequired = {
@@ -53,8 +54,8 @@ export class Track extends Base {
   offset = 0; // second  convert to marginLeft
   width = 0; // pixel    calculated by (duration + offset)
   height = 0; // pixel
-  marginLeft = 0; // pixel
-  marginRight = 0; // pixel
+  marginLeft = 0; // pixel   gap of track
+  marginRight = 0; // pixel  drag right border
 
   constructor(options: TrackOption) {
     super(options.name, options.id);
@@ -62,6 +63,7 @@ export class Track extends Base {
     this.duration = options.duration;
     this.offset = options.offset || 0;
     this.height = options.height || 0;
+    this.width = options.width || 0;
   }
 
   getProps(): any {
