@@ -1,11 +1,11 @@
 import SplitPanes from './SplitPanes.vue';
 import Splitter from './Splitter.vue';
-import Panel from './Pane.vue';
-
-// export const Splitter = Splitter;
-// export const Panel = Panel;
+import Pane from './Pane.vue';
 
 export const LpSplitPanes = Object.assign(SplitPanes, {
   Splitter,
-  Panel,
+  Pane,
 });
+
+export const LpPane = Pane;
+export const LpSplitter = Splitter;

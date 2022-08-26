@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "run-p dev:editor dev:docs",
     "dev:editor": "pnpm -F editor dev",
-    "dev:docs": "vitepress dev packages --port 3334",
+    "dev:docs": "node scripts/autoExport & vitepress dev packages --port 3334",
     "lint:eslint": "eslint --cache --max-warnings 0 \"{src,plugins,mocks,tests}/**/*.{vue,js,ts,tsx}\" --fix",
     "lint:format": "prettier --write --loglevel warn \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
@@ -56,6 +56,7 @@
     "@vue/compiler-sfc": "^3.2.37",
     "@vue/theme": "^1.0.4",
     "chalk": "^4.1.2",
+    "chokidar": "^3.5.3",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
