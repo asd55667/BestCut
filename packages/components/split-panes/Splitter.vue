@@ -41,7 +41,7 @@ onMounted(() => {
   }
 });
 
-function onSpliterDown(e: PointerEvent) {
+function onSplitterDown(e: PointerEvent) {
   last = props.vertical ? e.clientX : e.clientY;
   val1 = props.vertical ? box1.value!.clientWidth : box1.value!.clientHeight;
   val2 = props.vertical ? box2.value!.clientWidth : box2.value!.clientHeight;
@@ -53,7 +53,7 @@ const clip = (v: number, i: number) => {
   return Math.max(Math.min(v, val - props.min![1 - i]), props.min![i]);
 };
 
-function onSpliterMove(e: PointerEvent) {
+function onSplitterMove(e: PointerEvent) {
   if (!splitter.value!.hasPointerCapture(e.pointerId)) return;
 
   const delta = props.vertical ? e.clientX - last : e.clientY - last;
@@ -65,7 +65,7 @@ function onSpliterMove(e: PointerEvent) {
   box2.value!.style![key] = `${after}px`;
 }
 
-function onSpliterUp(e: PointerEvent) {
+function onSplitterUp(e: PointerEvent) {
   splitter.value!.releasePointerCapture(e.pointerId);
 }
 
@@ -81,8 +81,8 @@ const splitterStyle = computed(() => {
     ref="splitter"
     :class="[vertical ? 'h-full cursor-col-resize' : 'w-full cursor-row-resize']"
     :style="splitterStyle"
-    @pointermove="onSpliterMove"
-    @pointerdown="onSpliterDown"
-    @pointerup="onSpliterUp"
+    @pointermove="onSplitterMove"
+    @pointerdown="onSplitterDown"
+    @pointerup="onSplitterUp"
   />
 </template>

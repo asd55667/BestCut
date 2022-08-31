@@ -10,7 +10,7 @@ import { isVideo, isAudio, isPicture } from '@chiulipine/track';
 
 type Tab = {
   component: any;
-  tip?: string;
+  tip: string | null;
   active: Ref<boolean>;
   show: Ref<boolean>;
   placement?:
@@ -183,6 +183,7 @@ export default defineComponent({
         placement: 'bottomRight',
       },
       {
+        tip: null,
         component: scaler,
         active: isMapNotEmpty,
         show: ref(true),

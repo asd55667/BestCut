@@ -148,12 +148,12 @@ onUnmounted(() => {
       </div>
 
       <div v-if="inFullScreen" class="absolute bottom-1/3 right-2">
-        <FullscreenOutlined class="cursor-pointer" @click="switchFullScreen" />
+        <FullscreenExitOutlined class="cursor-pointer" @click="switchFullScreen" />
       </div>
 
       <div v-else class="absolute flex items-center leading-7 w-15 right-2">
         <button class="mr-2">原始</button>
-        <FullscreenExitOutlined class="cursor-pointer" @click="toFullScreen" />
+        <FullscreenOutlined class="cursor-pointer" @click="toFullScreen" />
       </div>
     </div>
   </div>
