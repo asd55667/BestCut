@@ -2,7 +2,6 @@
 import type { ComponentPublicInstance } from 'vue';
 
 import { on, off } from '@chiulipine/utils';
-import { MouseCtl } from '@chiulipine/utils/mouse';
 import { useTrackStore } from '@/store/track';
 import { TrackHeadWidth, TimelineTailWidth } from '@chiulipine/track';
 
@@ -16,8 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const hover = ref(false);
 const hoverX = ref(TrackHeadWidth);
-const locatorX = ref(TrackHeadWidth);
-const locator = ref<HTMLElement | null>(null);
+const locator = $ref<{ locatorX: number }>();
 
 const trackStore = useTrackStore();
 const isMapEmpty = computed(() => trackStore.isMapEmpty());
@@ -25,12 +23,11 @@ watch(
   () => trackStore.manager.currentTime,
   (tp: number) => {
     const x = trackStore.tp2x(tp / 1000);
-    locatorX.value = TrackHeadWidth + x;
+    locator.locatorX = TrackHeadWidth + x;
   }
 );
 
 const timelineRef = ref<ComponentPublicInstance | null>(null);
-let mLocator: MouseCtl | null = null;
 
 const onMouse = (e: PointerEvent) => {
   const timeline = timelineRef.value?.$el || timelineRef.value;
@@ -40,14 +37,14 @@ const onMouse = (e: PointerEvent) => {
   x = Math.max(TrackHeadWidth, x);
   if (e.type === 'pointerdown') {
     if (!isMapEmpty.value) {
-      locatorX.value = x;
+      locator.locatorX = x;
       trackStore.jumpTo(x - TrackHeadWidth);
     }
     hoverX.value = x;
   } else if (e.type === 'pointermove') {
     hoverX.value = x;
   }
-  if (hoverX.value === locatorX.value) hover.value = false;
+  if (hoverX.value === locator.locatorX) hover.value = false;
 };
 
 const events: string[] = ['pointermove', 'pointerdown'];
@@ -75,37 +72,16 @@ const onTimelineScroll = (e: WheelEvent) => {
   main.scrollLeft = Math.min(scrollLeft, parseFloat(timeline.style.width) - main.offsetWidth);
 };
 
-const isDragging = ref(false);
-const dragLocator = () => {
-  if (!locator.value) return;
-  const { paused } = trackStore.manager;
-
-  mLocator = new MouseCtl(locator.value);
-  mLocator.moveCallback = function () {
-    const dx = this.x - this.lastX;
-    const x = Math.max(TrackHeadWidth, locatorX.value + dx);
-    locatorX.value = x;
-    isDragging.value = true;
-    hover.value = false;
-
-    if (!paused) trackStore.pauseResume();
-    trackStore.jumpTo(x - TrackHeadWidth);
-  };
-  mLocator.upCallback = function () {
-    isDragging.value = false;
-    if (hoverX.value === locatorX.value) hover.value = false;
-
-    if (!paused) trackStore.pauseResume();
-  };
+const onLocatorMove = () => {
+  hover.value = false;
+  if (!trackStore.manager.paused) trackStore.pauseResume();
+  trackStore.jumpTo(locator.locatorX - TrackHeadWidth);
 };
 
-onMounted(() => {
-  dragLocator();
-});
-
-onUnmounted(() => {
-  mLocator && mLocator.stopAllListeners();
-});
+const onLocatorUp = () => {
+  if (hoverX.value === locator.locatorX) hover.value = false;
+  if (!trackStore.manager.paused) trackStore.pauseResume();
+};
 </script>
 
 <template>
@@ -118,32 +94,20 @@ onUnmounted(() => {
     <div class="h-2.5" absolute w-screen :style="`margin-left: ${marginLeft}px;`">
       <canvas id="scaler" h-full w-full m-0 />
     </div>
+
     <div
       v-show="hover"
       class="timeline-hover absolute h-full w-px bg-yellow-500 top-0 z-10 pointer-events-none"
       :style="`left: ${hoverX}px`"
     />
 
-    <div
+    <LpTimelineLocator
       ref="locator"
-      :class="[
-        'timeline-locator absolute h-full w-px z-10',
-        isMapEmpty ? 'pointer-events-none' : '',
-      ]"
-      :style="`left: ${locatorX}px;${''}`"
-    >
-      <div
-        border="2 rounded-bl-1/2 rounded-br-1/2"
-        :class="[
-          'timeline-locator-head w-2.4 h-3.4 -translate-x-1/2',
-          isDragging ? 'bg-white' : '',
-          isMapEmpty ? 'border-gray-400' : 'border-white',
-        ]"
-      ></div>
-      <div h="[calc(100%-0.85rem)]">
-        <div :class="[isMapEmpty ? 'bg-gray-500' : 'bg-white']" h-full w-px top-0 />
-      </div>
-    </div>
+      :active="!isMapEmpty"
+      :offset="TrackHeadWidth"
+      @pointermove="onLocatorMove"
+      @pointerup="onLocatorUp"
+    />
 
     <slot></slot>
   </div>

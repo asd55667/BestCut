@@ -9,6 +9,7 @@ const Components: DefaultTheme.SidebarItem[] = [
   { text: 'ResourceBox', link: '/components/resource-box/' },
   { text: 'TrackBox', link: '/components/track-box/' },
   { text: 'SplitPanes', link: '/components/split-panes/' },
+  { text: 'TimelineLocator', link: '/components/timeline-locator/' },
   //
 ];
 
